@@ -1,13 +1,17 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import LoginCadastro from './pages/LoginCadastro.jsx'
 import SystemCallsPage from './pages/SystemCalls.jsx'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LoginCadastro from './pages/LoginCadastro.jsx'
+import Notes from './pages/Notes.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <SystemCallsPage />
+       <Routes>
+        <Route path="/" element={<LoginCadastro />} />
+          <Route path="/Notes" element={<Notes />} />
+      </Routes>
     </BrowserRouter>
   </StrictMode>,
 )
