@@ -57,7 +57,7 @@ function Conta() {
     return (
         <div className="container">
             <div className="Header">
-                <h1>FINANCE</h1>
+                <h1>OS LEARNING LAB</h1>
             </div>
             <div className="Login-container">
                 <div className="criar_conta">
