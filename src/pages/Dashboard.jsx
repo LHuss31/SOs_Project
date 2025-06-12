@@ -13,7 +13,7 @@ function Dashboard() {
       description: "Simule as principais chamadas de sistema: fork, execl, wait, open, read, write, e brk, mmap, munmap."
     },
     {
-      title: "CPU/IO-Bound",
+      title: "CPU_IO_Bound",
       description: "Simule processos CPU-bound e I/O-bound em tempo real, demonstrando seu comportamento no sistema."
     },
     {
