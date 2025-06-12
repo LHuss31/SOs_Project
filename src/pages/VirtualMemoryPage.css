@@ -134,6 +134,8 @@ body {
     font-weight: 600;
 }
 
+
+
 /* BLOCO MEMORY STATE AJUSTADO */
 
 .vm-memory-card {
@@ -223,4 +225,66 @@ body {
 
 .vm-legend-existing .vm-legend-box {
     background-color: #dbeafe;
+}
+
+.vm-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.vm-timeline-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.vm-timeline-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.2rem;
+  color: #111827;
+}
+
+.vm-timeline-subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.vm-timeline-header, .vm-timeline-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr 1fr;
+  padding: 0.5rem 0;
+  font-weight: 500;
+  color: #111827;
+}
+
+.vm-timeline-header {
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 700;
+}
+
+.vm-timeline-row {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.vm-timeline-fault {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.vm-timeline-hit {
+  background-color: #f3f4f6;
+  color: #111827;
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
