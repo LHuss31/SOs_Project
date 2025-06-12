@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Notes.css';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/NavBar.jsx';
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -20,24 +20,24 @@ function Notes() {
   return (
     <>
       <NavBar />
-      <div className="container">
-        <div className="Login-container">
+      <div className="containerN">
+        <div className="Login-containerN">
+          <h2>Anotações</h2>
           <form onSubmit={handleAddNote} style={{ width: '100%' }}>
-            <input
-              type="text"
+            <textarea
               placeholder="Digite sua anotação..."
               value={newNote}
               onChange={e => setNewNote(e.target.value)}
-              style={{ marginBottom: 10 }}
+              style={{ marginBottom: 10, resize: 'vertical', minHeight: 40, maxHeight: 200, width: '100%' }}
             />
             <button type="submit">Adicionar</button>
           </form>
           <div style={{ marginTop: 30, width: '100%' }}>
-            <h2>Notas de todos os usuários:</h2>
+            <h3>Anotações existentes:</h3>
             <ul>
               {notes.map((note, idx) => (
                 <li key={idx} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
-                  <span style={{ flex: 1 }}>{note.text}</span>
+                  <span style={{ flex: 1, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{note.text}</span>
                   <button
                     style={{
                       marginLeft: 10,

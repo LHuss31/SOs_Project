@@ -1,12 +1,12 @@
 body {
-    background-color: #121212;
+    background-color: #181c24;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     color: #e0e0e0;
 }
 
-.container {
+.containerL {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -15,11 +15,11 @@ body {
     padding-top: 100px; /* Espaço para o header fixo */
 }
 
-.Header {
+.HeaderL {
     width: 100%;
     text-align: center;
     padding: 20px 0;
-    background-color: #1e1e1e;
+    background-color: #181c24;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
@@ -27,24 +27,24 @@ body {
     z-index: 1000;
 }
 
-.Header h1 {
+.HeaderL h1 {
     font-size: 2rem;
     color: #ffffff;
     margin: 0;
 }
 
-.Login-container {
+.Login-containerL {
     display: flex;
     flex-direction: row;
     gap: 40px;
     margin-top: 40px;
-    background-color: #1e1e1e;
+    background-color: #181c24;
     padding: 40px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.criar_conta, .login {
+.criar_contaL, .loginL {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,22 +52,22 @@ body {
     min-width: 250px;
 }
 
-.criar_conta h2,
-.login h2 {
+.criar_contaL h2,
+.loginL h2 {
     margin-bottom: 10px;
     color: #fff;
 }
 
-.criar_conta form,
-.login form {
+.criar_contaL form,
+.loginL form {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
 }
 
-.criar_conta input,
-.login input {
+.criar_contaL input,
+.loginL input {
     width: 100%;
     padding: 10px;
     border: 1px solid #444444;
@@ -78,14 +78,14 @@ body {
     box-sizing: border-box;
 }
 
-.criar_conta input:focus,
-.login input:focus {
+.criar_contaL input:focus,
+.loginL input:focus {
     border-color: #1e90ff;
     outline: none;
 }
 
-.criar_conta button,
-.login button {
+.criar_contaL button,
+.loginL button {
     padding: 10px 15px;
     background-color: #1e90ff;
     color: #ffffff;
@@ -97,12 +97,12 @@ body {
     transition: background 0.2s;
 }
 
-.criar_conta button:hover,
-.login button:hover {
+.criar_contaL button:hover,
+.loginL button:hover {
     background-color: #1c7ed6;
 }
 
-.criar_conta button:active,
-.login button:active {
+.criar_contaL button:active,
+.loginL button:active {
     background-color: #1864ab;
 }
