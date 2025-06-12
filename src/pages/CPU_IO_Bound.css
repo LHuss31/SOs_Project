@@ -11,6 +11,7 @@
   border-radius: 8px;
   padding: 1rem;
   background-color: #f9f9f9;
+  color:#000
 }
 
 .monitor-content {
@@ -33,14 +34,14 @@
   padding: 8px 12px;
   font-size: 14px;
   border: none;
-  background-color: #007bff;
+  background-color: #4fc3f7;
   color: white;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .button-group button:hover {
-  background-color: #0056b3;
+  background-color: #4fc3f7;
 }
 
 .bounds-header {
