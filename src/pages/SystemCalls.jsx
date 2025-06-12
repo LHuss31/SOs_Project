@@ -1,0 +1,85 @@
+import React, { useState } from "react";
+import "./SystemCallsPage.css";
+const systemCalls = [
+    { name: "fork()", description: "Creates a new process by duplicating the calling process", type: "Process" },
+    { name: "open()", description: "Opens a file and returns a file descriptor", type: "File I/O" },
+    { name: "malloc()", description: "Allocates dynamic memory from the heap", type: "Memory" },
+    { name: "read()", description: "Reads data from a file descriptor", type: "I/O" },
+    { name: "write()", description: "Writes data to a file descriptor", type: "I/O" },
+    { name: "exec()", description: "Replaces current process image with a new program", type: "Process" },
+    { name: "wait()", description: "Waits for a child process to terminate", type: "Process" },
+  ];
+  
+  const codeExample = `#include <stdio.h>
+  #include <unistd.h>
+  #include <sys/wait.h>
+  
+  int main() {
+      pid_t pid = fork();
+  
+      if (pid == 0) {
+          printf("Child process: PID = %d\\n", getpid());
+      } else if (pid > 0) {
+          printf("Parent process: PID = %d, Child PID = %d\\n", getpid(), pid);
+          wait(NULL);
+      } else {
+          perror("fork failed");
+      }
+      return 0;
+  }`;
+  
+  export default function SystemCallsExplorer() {
+    const [selected, setSelected] = useState("fork()");
+  
+    return (
+      <div className="container">
+  
+        <header className="header">
+          <h1>System Calls Explorer</h1>
+          <p>Explore essential system calls with interactive code examples</p>
+        </header>
+  
+        <div className="content">
+  
+          <aside className="sidebar">
+            <h2>System Calls</h2>
+            <p>Click on a system call to explore</p>
+  
+            {systemCalls.map((call) => (
+              <div
+                key={call.name}
+                className={`card ${selected === call.name ? "selected" : "unselected"}`}
+                onClick={() => setSelected(call.name)}
+              >
+                <div className="card-header">
+                  <span className="title">{call.name}</span>
+                  <span className="type">{call.type}</span>
+                </div>
+                <div className="description">{call.description}</div>
+              </div>
+            ))}
+          </aside>
+  
+          <main className="main-content">
+            <div className="call-header">
+              <h3>{selected}</h3>
+              <span>{systemCalls.find((c) => c.name === selected).description}</span>
+            </div>
+  
+            <div className="tabs">
+              <div className="tab active">Code</div>
+              <div className="tab disabled">Explanation</div>
+              <div className="tab disabled">Output</div>
+            </div>
+  
+            <div className="code-box">
+              <pre>{codeExample}</pre>
+            </div>
+  
+            <button className="compile-btn">▶ Compile & Run</button>
+          </main>
+  
+        </div>
+      </div>
+    );
+  }

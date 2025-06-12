@@ -10,48 +10,22 @@ function Conta() {
     const [loginSenha, setLoginSenha] = useState('');
     const navigate = useNavigate();
 
-    const handleCriarConta = async (e) => {
+    const handleCriarConta = (e) => {
         e.preventDefault();
         if (senha !== confirmacaoSenha) {
             alert('As senhas não coincidem!');
             return;
         }
-        try {
-            const response = await fetch('/api/auth/cadastro', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
-                navigate('/welcome');
-            } else {
-                alert(data.message || 'Erro ao criar conta');
-            }
-        } catch (error) {
-            alert('Erro ao conectar com o servidor');
-        }
+        // Simula cadastro e navega para Notes
+        localStorage.setItem('token', 'fake-token');
+        navigate('/SystemCalls');
     };
 
-    const handleLogin = async (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: loginEmail, senha: loginSenha }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
-                navigate('/homepage');
-            } else {
-                alert(data.message || 'Erro ao fazer login');
-            }
-        } catch (error) {
-            alert('Erro ao conectar com o servidor');
-        }
+        // Simula login e navega para Notes
+        localStorage.setItem('token', 'fake-token');
+        navigate('/SystemCalls');
     };
 
     return (
