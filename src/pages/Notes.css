@@ -1,4 +1,4 @@
-.container {
+.containerN {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   background: #181c24;
 }
 
-.Login-container {
+.Login-containerN {
   background: #23283a;
   padding: 32px 24px;
   border-radius: 10px;
@@ -19,13 +19,15 @@
   margin-top: 32px;
 }
 
-.Login-container form {
+.Login-containerN form {
   display: flex;
+  align-items:center;
   gap: 8px;
   margin-bottom: 24px;
+  flex-direction: column;
 }
 
-.Login-container input[type="text"] {
+.Login-containerN textarea {
   flex: 1;
   padding: 10px;
   border: 1px solid #444;
@@ -33,9 +35,13 @@
   background: #181c24;
   color: #e0e0e0;
   font-size: 1rem;
+  resize: vertical;
+  min-height: 40px;
+  max-height: 200px;
+  width: 100%;
 }
 
-.Login-container button[type="submit"] {
+.Login-containerN button[type="submit"] {
   padding: 10px 18px;
   background: #4fc3f7;
   color: #181c24;
@@ -44,25 +50,26 @@
   font-weight: bold;
   cursor: pointer;
   transition: background 0.2s;
+  margin-top: 8px;
 }
 
-.Login-container button[type="submit"]:hover {
+.Login-containerN button[type="submit"]:hover {
   background: #0288d1;
   color: #fff;
 }
 
-.Login-container h2 {
+.Login-containerN h2 {
   color: #fff;
   margin-bottom: 12px;
 }
 
-.Login-container ul {
+.Login-containerN ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.Login-container li {
+.Login-containerN li {
   background: #181c24;
   color: #e0e0e0;
   border-radius: 5px;
@@ -72,7 +79,13 @@
   align-items: center;
 }
 
-.Login-container li button {
+.Login-containerN li span {
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.Login-containerN li button {
   margin-left: 12px;
   background: #ff4d4f;
   color: #fff;
@@ -84,6 +97,6 @@
   transition: background 0.2s;
 }
 
-.Login-container li button:hover {
+.Login-containerN li button:hover {
   background: #d9363e;
 }

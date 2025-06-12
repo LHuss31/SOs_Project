@@ -29,12 +29,12 @@ function Conta() {
     };
 
     return (
-        <div className="container">
-            <div className="Header">
+        <div className="containerL">
+            <div className="HeaderL">
                 <h1>OS LEARNING LAB</h1>
             </div>
-            <div className="Login-container">
-                <div className="criar_conta">
+            <div className="Login-containerL">
+                <div className="criar_contaL">
                     <h2>Crie sua conta</h2>
                     <form onSubmit={handleCriarConta}>
                         <input
@@ -58,7 +58,7 @@ function Conta() {
                         <button type="submit">Criar conta</button>
                     </form>
                 </div>
-                <div className="login">
+                <div className="loginL">
                     <h2>Login</h2>
                     <form onSubmit={handleLogin}>
                         <input
