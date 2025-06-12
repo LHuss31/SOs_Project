@@ -1,3 +1,14 @@
+#root {
+  background-color: #181c24;
+  color: #e0e0e0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+
 .menu-container {
   max-width: 960px;
   margin: 0 auto;
@@ -17,7 +28,7 @@
 
 .welcome-subtitle {
   font-size: 1rem;
-  color: #64748b;
+  color: #ffffff;
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -37,7 +48,8 @@
 
 /* Estilo dos cards */
 .card {
-  background-color: #ffffff;
+  background-color: #2328233a;
+  cursor: default;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.5rem;
@@ -61,13 +73,13 @@
 .card-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #4fc3f7;
   margin-bottom: 0.5rem;
 }
 
 .card-description {
   font-size: 0.95rem;
-  color: #475569;
+  color: #ffffff;
   margin-bottom: 1rem;
   flex-grow: 1;
 }
