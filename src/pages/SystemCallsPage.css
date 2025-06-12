@@ -1,8 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: white;
-    color: #111827;
+    background-color: #181c24;
+    color: #181c24;
   }
   
   .container {
@@ -36,11 +36,13 @@ body {
     border-right: 1px solid #e5e7eb;
     background-color: #f9fafb;
     padding: 1rem;
+    border-radius: 1rem;
   }
   
   .sidebar h2 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    color: #333333;
   }
   
   .sidebar p {
@@ -62,6 +64,10 @@ body {
   /* SELECIONADO (preto) */
   .card.selected {
     background-color: #111827;
+    color: white;
+  }
+
+  .card.selected{
     color: white;
   }
   
@@ -97,10 +103,14 @@ body {
     font-weight: 600;
   }
   
-  .description {
+  .sidebar .description {
     font-size: 0.9rem;
-    color: #d1d5db;
+    color: #333333;
     line-height: 1.2rem;
+  }
+
+  .sidebar .card.selected .description{
+    color: rgb(230, 230, 230);
   }
   
   /* Conteúdo principal */
@@ -132,8 +142,12 @@ body {
   }
   
   .tab.active {
-    color: #111827;
+    color: #4fc3f7;
     border-bottom: 2px solid #111827;
+  }
+
+  .tab:hover{
+    cursor: pointer;
   }
   
   .tab.disabled {
@@ -148,6 +162,7 @@ body {
     margin-bottom: 1.5rem;
     height: 400px;
     overflow: auto;
+    color: #181c24;
   }
   
   .compile-btn {
