@@ -18,7 +18,7 @@ function Conta() {
         }
         // Simula cadastro e navega para Notes
         localStorage.setItem('token', 'fake-token');
-        navigate('/SystemCalls');
+        navigate('/Dashboard');
     };
 
     const handleLogin = (e) => {
