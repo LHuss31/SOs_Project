@@ -68,30 +68,60 @@ export default function VirtualMemoryPage() {
           </div>
         </div>
 
-        <div className="vm-memory-card">
-          <h2>Current Memory State</h2>
-          <p className="vm-memory-subtitle">Page frames in physical memory</p>
+        <div className="vm-right-panel">
+          <div className="vm-memory-card">
+            <h2>Current Memory State</h2>
+            <p className="vm-memory-subtitle">Page frames in physical memory</p>
 
-          <div className="vm-memory-frames">
-            {frameArray.map((frame, index) => (
-              <div key={index} className="vm-memory-frame">
-                <span className="vm-frame-title">Frame {frame}</span>
-                <div className="vm-frame-box">-</div>
+            <div className="vm-memory-frames">
+              {frameArray.map((frame, index) => (
+                <div key={index} className="vm-memory-frame">
+                  <span className="vm-frame-title">Frame {frame}</span>
+                  <div className="vm-frame-box">-</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="vm-memory-legend">
+              <div className="vm-legend vm-legend-new">
+                <div className="vm-legend-box"></div> Newly loaded page
               </div>
-            ))}
+              <div className="vm-legend vm-legend-replaced">
+                <div className="vm-legend-box"></div> Replaced page
+              </div>
+              <div className="vm-legend vm-legend-existing">
+                <div className="vm-legend-box"></div> Existing page
+              </div>
+            </div>
           </div>
 
-          <div className="vm-memory-legend">
-            <div className="vm-legend vm-legend-new">
-              <div className="vm-legend-box"></div> Newly loaded page
+          {/* EXECUTION TIMELINE */}
+          <div className="vm-timeline-card">
+            <h2>Execution Timeline</h2>
+            <p className="vm-timeline-subtitle">Step-by-step page replacement process</p>
+
+            <div className="vm-timeline-header">
+              <div>Step</div>
+              <div>Page</div>
+              <div>Frames</div>
+              <div>Fault</div>
             </div>
-            <div className="vm-legend vm-legend-replaced">
-              <div className="vm-legend-box"></div> Replaced page
+
+            {/* Aqui futuramente o backend irá popular */}
+            <div className="vm-timeline-row">
+              <div>1</div>
+              <div>5</div>
+              <div>1 3 5 6</div>
+              <div><span className="vm-timeline-fault">Yes</span></div>
             </div>
-            <div className="vm-legend vm-legend-existing">
-              <div className="vm-legend-box"></div> Existing page
+            <div className="vm-timeline-row">
+              <div>2</div>
+              <div>3</div>
+              <div>1 3 5 6</div>
+              <div><span className="vm-timeline-hit">No</span></div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
