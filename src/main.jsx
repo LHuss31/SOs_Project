@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import Dashboard from './pages/Dashboard.jsx'
 import SystemCallsPage from './pages/SystemCalls.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginCadastro from './pages/LoginCadastro.jsx'
