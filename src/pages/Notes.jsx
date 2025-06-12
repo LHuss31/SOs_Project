@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Notes.css';
 import NavBar from '../components/NavBar';
 
@@ -6,30 +6,15 @@ function Notes() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
 
-  // Buscar notas do servidor ao carregar a página
-  useEffect(() => {
-    fetch('/api/notes')
-      .then(res => res.json())
-      .then(data => setNotes(data))
-      .catch(() => setNotes([]));
-  }, []);
-
-  // Adicionar nova nota
-  const handleAddNote = async (e) => {
+  const handleAddNote = (e) => {
     e.preventDefault();
     if (!newNote.trim()) return;
-    const res = await fetch('/api/notes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: newNote }),
-    });
-    if (res.ok) {
-      const note = await res.json();
-      setNotes([...notes, note]);
-      setNewNote('');
-    } else {
-      alert('Erro ao adicionar nota');
-    }
+    setNotes([...notes, { text: newNote }]);
+    setNewNote('');
+  };
+
+  const handleDeleteNote = (idxToDelete) => {
+    setNotes(notes.filter((_, idx) => idx !== idxToDelete));
   };
 
   return (
@@ -51,8 +36,22 @@ function Notes() {
             <h2>Notas de todos os usuários:</h2>
             <ul>
               {notes.map((note, idx) => (
-                <li key={note.id || idx} style={{ marginBottom: 8 }}>
-                  {note.text}
+                <li key={idx} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
+                  <span style={{ flex: 1 }}>{note.text}</span>
+                  <button
+                    style={{
+                      marginLeft: 10,
+                      background: '#ff4d4f',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: 4,
+                      padding: '2px 8px',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => handleDeleteNote(idx)}
+                  >
+                    Apagar
+                  </button>
                 </li>
               ))}
             </ul>
