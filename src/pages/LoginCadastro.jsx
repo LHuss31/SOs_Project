@@ -25,7 +25,7 @@ function Conta() {
         e.preventDefault();
         // Simula login e navega para Notes
         localStorage.setItem('token', 'fake-token');
-        navigate('/SystemCalls');
+        navigate('/Dashboard');
     };
 
     return (
