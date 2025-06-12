@@ -18,7 +18,7 @@ export default function NavBar() {
         <Link to="/SystemCalls">System Calls</Link>
         <Link to="/IO-bound">IoBound</Link>
         <Link to="/producer-consumer">Producer-Consumer</Link>
-        <Link to="/memory-management">Memory Management</Link>
+        <Link to="/VirtualMemory">Gerenciamento de Memoria</Link>
         <Link to="/Notes">Notes</Link>
       </div>
       <button className="navbar-logout" onClick={handleLogout}>Logout</button>
