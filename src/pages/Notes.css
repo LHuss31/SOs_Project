@@ -1,0 +1,89 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 80px; /* espaço para a navbar fixa */
+  background: #181c24;
+}
+
+.Login-container {
+  background: #23283a;
+  padding: 32px 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  min-width: 340px;
+  max-width: 480px;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.Login-container form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.Login-container input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background: #181c24;
+  color: #e0e0e0;
+  font-size: 1rem;
+}
+
+.Login-container button[type="submit"] {
+  padding: 10px 18px;
+  background: #4fc3f7;
+  color: #181c24;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.Login-container button[type="submit"]:hover {
+  background: #0288d1;
+  color: #fff;
+}
+
+.Login-container h2 {
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.Login-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Login-container li {
+  background: #181c24;
+  color: #e0e0e0;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.Login-container li button {
+  margin-left: 12px;
+  background: #ff4d4f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.Login-container li button:hover {
+  background: #d9363e;
+}

@@ -18,14 +18,14 @@ function Conta() {
         }
         // Simula cadastro e navega para Notes
         localStorage.setItem('token', 'fake-token');
-        navigate('/Notes');
+        navigate('/SystemCalls');
     };
 
     const handleLogin = (e) => {
         e.preventDefault();
         // Simula login e navega para Notes
         localStorage.setItem('token', 'fake-token');
-        navigate('/Notes');
+        navigate('/SystemCalls');
     };
 
     return (
