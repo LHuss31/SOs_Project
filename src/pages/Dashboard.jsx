@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './Dashboard.css';
+import Navbar from "../components/NavBar";
 
 function Dashboard() {
   const [selected, setSelected] = useState(null);
@@ -24,6 +25,8 @@ function Dashboard() {
   ];
 
   return (
+    <>
+    <Navbar/>
     <div className="menu-container">
       <h1 className="welcome-title">Boas-vindas, aaaaa!</h1>
       <p className="welcome-subtitle">
@@ -45,6 +48,7 @@ function Dashboard() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 
