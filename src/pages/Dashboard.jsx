@@ -16,7 +16,7 @@ function Dashboard() {
     {
       title: "CPU/IO-Bound",
       description: "Simule processos CPU-bound e I/O-bound em tempo real, demonstrando seu comportamento no sistema.",
-      link: "/IO-bound"
+      link: "/CPU_IO-Bound"
     },
     {
       title: "ProdutorConsumidor",
