@@ -16,6 +16,7 @@ export default function NavBar() {
       <div className="navbar-links">
         <Link to="/Dashboard">Dashboard</Link>
         <Link to="/SystemCalls">System Calls</Link>
+        <Link to="/IO-bound">IoBound</Link>
         <Link to="/producer-consumer">Producer-Consumer</Link>
         <Link to="/memory-management">Memory Management</Link>
         <Link to="/Notes">Notes</Link>
