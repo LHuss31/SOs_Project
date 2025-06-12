@@ -54,52 +54,52 @@ export default function SystemCallsExplorer() {
     };
 
     return (
-        <div className="container">
-            <NavBar />
-            <header className="header">
-                <h1>System Calls Explorer</h1>
-                <p>Explore essential system calls with interactive code examples</p>
-            </header>
+       <div className="system-calls-container">
+  <NavBar />
+  <header className="system-calls-header">
+    <h1>System Calls Explorer</h1>
+    <p>Explore essential system calls with interactive code examples</p>
+  </header>
 
-            <div className="content">
-                <aside className="sidebar">
-                    <h2>System Calls</h2>
-                    <p>Click on a system call to explore</p>
+  <div className="system-calls-content">
+    <aside className="system-calls-sidebar">
+      <h2>System Calls</h2>
+      <p>Click on a system call to explore</p>
 
-                    {systemCalls.map((call) => (
-                        <div
-                            key={call.name}
-                            className={`card ${selected === call.name ? "selected" : "unselected"}`}
-                            onClick={() => setSelected(call.name)}
-                        >
-                            <div className="card-header">
-                                <span className="title">{call.name}</span>
-                                <span className="type">{call.type}</span>
-                            </div>
-                            <div className="description">{call.description}</div>
-                        </div>
-                    ))}
-                </aside>
-
-                <main className="main-content fixed-height">
-                    <div className="call-header">
-                        <h3>{selected}</h3>
-                        <span>{systemCalls.find((c) => c.name === selected).description}</span>
-                    </div>
-
-                    <div className="tabs">
-                        <div className={`tab ${activeTab === "Code" ? "active" : ""}`} onClick={() => setActiveTab("Code")}>Code</div>
-                        <div className={`tab ${activeTab === "Explanation" ? "active" : ""}`} onClick={() => setActiveTab("Explanation")}>Explanation</div>
-                        <div className={`tab ${activeTab === "Output" ? "active" : ""}`} onClick={() => setActiveTab("Output")}>Output</div>
-                    </div>
-
-                    <div className="code-box">
-                        {renderContent()}
-                    </div>
-
-                    <button className="compile-btn">▶ Compile & Run</button>
-                </main>
-            </div>
+      {systemCalls.map((call) => (
+        <div
+          key={call.name}
+          className={`system-calls-card ${selected === call.name ? "selected" : "unselected"}`}
+          onClick={() => setSelected(call.name)}
+        >
+          <div className="system-calls-card-header">
+            <span className="system-calls-title">{call.name}</span>
+            <span className="system-calls-type">{call.type}</span>
+          </div>
+          <div className="system-calls-description">{call.description}</div>
         </div>
+      ))}
+    </aside>
+
+    <main className="system-calls-main-content">
+      <div className="system-calls-call-header">
+        <h3>{selected}</h3>
+        <span>{systemCalls.find((c) => c.name === selected).description}</span>
+      </div>
+
+      <div className="system-calls-tabs">
+        <div className={`system-calls-tab ${activeTab === "Code" ? "active" : ""}`} onClick={() => setActiveTab("Code")}>Code</div>
+        <div className={`system-calls-tab ${activeTab === "Explanation" ? "active" : ""}`} onClick={() => setActiveTab("Explanation")}>Explanation</div>
+        <div className={`system-calls-tab ${activeTab === "Output" ? "active" : ""}`} onClick={() => setActiveTab("Output")}>Output</div>
+      </div>
+
+      <div className="system-calls-code-box">
+        {renderContent()}
+      </div>
+
+      <button className="system-calls-compile-btn">▶ Compile & Run</button>
+    </main>
+  </div>
+</div>
     );
 }
