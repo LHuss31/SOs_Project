@@ -63,9 +63,9 @@ function ResourceMonitor({ title, description, mode }: ResourceMonitorProps) {
           <h2>{title}</h2>
           <p>{description}</p>
           <div className="button-group">
-            <button onClick={() => setIsRunning(true)}>Executar</button>
-            <button onClick={() => setIsRunning(false)}>Pausar</button>
-            <button onClick={reset}>Reiniciar</button>
+            <button onClick={() => setIsRunning(true)}>▶ Iniciar</button>
+            <button onClick={() => setIsRunning(false)}>⏸ Pausar</button>
+            <button onClick={reset}>⟳ Reiniciar</button>
           </div>
         </div>
         <div className="chart-container">
@@ -92,7 +92,7 @@ function ResourceMonitor({ title, description, mode }: ResourceMonitorProps) {
                 type="monotone"
                 dataKey="cpu"
                 stroke="#ef4444"
-                name="CPU Usage"
+                name="Uso da CPU"
                 strokeWidth={2}
                 dot={false}
               />
@@ -100,7 +100,7 @@ function ResourceMonitor({ title, description, mode }: ResourceMonitorProps) {
                 type="monotone"
                 dataKey="io"
                 stroke="#3b82f6"
-                name="I/O Usage"
+                name="Uso de I/O"
                 strokeWidth={2}
                 dot={false}
               />
@@ -114,25 +114,24 @@ function ResourceMonitor({ title, description, mode }: ResourceMonitorProps) {
 
 export default function CPU_IO_Bound() {
   return (
-     <>
-    <NavBar />
-    <header className="bounds-header">
-      <h1>CPU/IO-Bound</h1>
-      <p>Analyze CPU-bound and I/O-bound processes with real-time visualization</p>
-    </header>
-    <div className="app-container">
-      <ResourceMonitor
-        title="CPU-bound Program"
-        description="This program performs intensive computations, utilizing most of the CPU resources."
-        mode="cpu"
-      />
-      <ResourceMonitor
-        title="I/O-bound Program"
-        description="This program performs frequent file operations, spending most time waiting for I/O."
-        mode="io"
-      />
-    </div>
+    <>
+      <NavBar />
+      <header className="bounds-header">
+        <h1>Gerenciamento de Processos CPU/I/O-Bound</h1>
+        <p>Visualize em tempo real a diferença entre processos com uso intensivo de CPU e de I/O</p>
+      </header>
+      <div className="app-container">
+        <ResourceMonitor
+          title="Programa CPU-bound"
+          description="Este programa realiza cálculos intensivos, utilizando a maior parte dos recursos da CPU."
+          mode="cpu"
+        />
+        <ResourceMonitor
+          title="Programa I/O-bound"
+          description="Este programa realiza operações frequentes de entrada/saída (I/O), passando a maior parte do tempo aguardando por essas operações."
+          mode="io"
+        />
+      </div>
     </>
   );
 }
-
