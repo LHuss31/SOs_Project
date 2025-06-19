@@ -21,7 +21,7 @@ function Dashboard() {
     {
       title: "ProdutorConsumidor",
       description: "Simule o clássico problema do Produtor-Consumidor com interação em tempo real. Acompanhe visualmente o estado do buffer e ajuste dinamicamente o número de produtores, consumidores e o tamanho do buffer para observar diferentes comportamentos.",
-      link: "/producer-consumer"
+      link: "/ProducerConsumer"
     },
     {
       title: "GerenciamentoDeMemoria",
