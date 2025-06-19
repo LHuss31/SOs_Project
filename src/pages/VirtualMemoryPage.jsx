@@ -30,7 +30,7 @@ export default function VirtualMemoryPage() {
             </div>
 
             <div className="vm-config-item">
-              <label>Número de Quadros (Frames): {frames}</label>
+              <label>Número de Frames: {frames}</label>
               <input type="range" min="0" max="7" value={frames} onChange={(e) => setFrames(e.target.value)} />
             </div>
 
@@ -50,11 +50,11 @@ export default function VirtualMemoryPage() {
           <div className="vm-stats-card">
             <h2>Estatísticas</h2>
             <div className="vm-stat-item">
-              <span>Page Faults (Faltas de Página):</span>
+              <span>Page Faults:</span>
               <span className="vm-fault-value">0</span>
             </div>
             <div className="vm-stat-item">
-              <span>Page Hits (Acertos de Página):</span>
+              <span>Page Hits:</span>
               <span className="vm-stat-badge">0</span>
             </div>
             <div className="vm-stat-item">
@@ -71,12 +71,12 @@ export default function VirtualMemoryPage() {
         <div className="vm-right-panel">
           <div className="vm-memory-card">
             <h2>Estado Atual da Memória</h2>
-            <p className="vm-memory-subtitle">Quadros de página na memória física</p>
+            <p className="vm-memory-subtitle">Frames utilizados na memória física</p>
 
             <div className="vm-memory-frames">
               {frameArray.map((frame, index) => (
                 <div key={index} className="vm-memory-frame">
-                  <span className="vm-frame-title">Quadro {frame}</span>
+                  <span className="vm-frame-title">Frame {frame}</span>
                   <div className="vm-frame-box">-</div>
                 </div>
               ))}
@@ -90,24 +90,22 @@ export default function VirtualMemoryPage() {
                 <div className="vm-legend-box"></div> Página substituída
               </div>
               <div className="vm-legend vm-legend-existing">
-                <div className="vm-legend-box"></div> Página existente
+                <div className="vm-legend-box"></div> Página já existente
               </div>
             </div>
           </div>
 
-          {/* LINHA DO TEMPO DE EXECUÇÃO */}
           <div className="vm-timeline-card">
-            <h2>Linha do Tempo da Execução</h2>
-            <p className="vm-timeline-subtitle">Processo passo a passo de substituição de páginas</p>
+            <h2>Linha do Tempo de Execução</h2>
+            <p className="vm-timeline-subtitle">Visualize o processo de substituição de páginas passo a passo</p>
 
             <div className="vm-timeline-header">
-              <div>Passo</div>
+              <div>Etapa</div>
               <div>Página</div>
-              <div>Quadros</div>
-              <div>Falta</div>
+              <div>Frames</div>
+              <div>Fault</div>
             </div>
 
-            {/* Simulação estática temporária */}
             <div className="vm-timeline-row">
               <div>1</div>
               <div>5</div>
