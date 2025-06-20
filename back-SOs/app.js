@@ -6,10 +6,14 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var authRouter = require('./routes/AuthRoutes'); // Adicione se quiser usar as rotas de autenticação
+
+var connectDB = require('./config/db');
+connectDB();
 
 var app = express();
 
-// view engine setup
+// view engine setup (remova se não for usar views)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -21,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter); // Adicione se quiser usar as rotas de autenticação
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
