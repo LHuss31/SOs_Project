@@ -1,0 +1,103 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Variants */
+.btn-default {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-default:hover {
+  background-color: #2563eb;
+}
+
+.btn-destructive {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-destructive:hover {
+  background-color: #dc2626;
+}
+
+.btn-outline {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+}
+
+.btn-outline:hover {
+  background-color: #f3f4f6;
+  color: black;
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #111827;
+}
+
+.btn-ghost:hover {
+  background-color: #f3f4f6;
+}
+
+.btn-link {
+  background-color: transparent;
+  color: #3b82f6;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Sizes */
+.btn-default {
+  height: 40px;
+  padding: 8px 16px;
+}
+
+.btn-sm {
+  height: 36px;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.btn-lg {
+  height: 44px;
+  padding: 10px 32px;
+  border-radius: 6px;
+}
+
+.btn-icon {
+  height: 40px;
+  width: 40px;
+  padding: 0;
+}
