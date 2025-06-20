@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/card';
 import { Button } from '../components/button';
 import { Badge } from '../components/badge';
+import Navbar from '../components/NavBar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/select';
 import { Play, Pause, RotateCcw, Upload } from 'lucide-react';
@@ -68,7 +69,7 @@ int main() {
 
     return 0;
 }`,
-      description: 'Performs intensive mathematical calculations using mostly CPU resources.'
+      description: 'Faz cálculos matemáticos utilizando, em maior parte, a CPU.'
     },
     'io-intensive': {
       name: 'I/O-Intensive Program',
@@ -131,7 +132,7 @@ int main() {
     close(fd); // Fecha o arquivo após leitura
     return 0;
 }`,
-      description: 'Performs frequent file operations, spending most time waiting for I/O.'
+      description: 'Faz operações com arquivos, aguardando por entradas e saídas.'
     },
   };
 
@@ -187,12 +188,14 @@ int main() {
   const currentProgram = programs[selectedProgram];
 
   return (
+    <>
+    <Navbar />
     <div className="cpuio-container">
       <div className="cpuio-wrapper">
         <div className="header">
-          <h1 className="title">Process Management</h1>
+          <h1 className="title">CPU e I/O bound</h1>
           <p className="subtitle">
-            Analyze CPU-bound and I/O-bound processes with real-time visualization
+            Analise processos CPU-bound e I/O-bound, visualizando o uso de recursos em tempo real.
           </p>
         </div>
 
@@ -201,8 +204,8 @@ int main() {
           <div className="cpuio-controls">
             <Card>
               <CardHeader>
-                <CardTitle>Program Selection</CardTitle>
-                <CardDescription>Choose a program to analyze</CardDescription>
+                <CardTitle>Seleção de processo</CardTitle>
+                <CardDescription>Escolha o processo que deseja analisar</CardDescription>
               </CardHeader>
               <CardContent>
                 <Select value={selectedProgram} onValueChange={setSelectedProgram}>
@@ -245,7 +248,7 @@ int main() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Process Statistics</CardTitle>
+                <CardTitle>Estatísticas</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="stat-item">
@@ -267,26 +270,15 @@ int main() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Upload Custom Program</CardTitle>
-                <CardDescription>Upload your own C program to analyze</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button variant="outline" className="upload-button">
-                  <Upload className="icon" />
-                  Upload File
-                </Button>
-              </CardContent>
-            </Card>
+            
           </div>
 
           {/* Visualization */}
           <div className="visualization-column">
             <Card>
               <CardHeader>
-                <CardTitle>Real-time Resource Usage</CardTitle>
-                <CardDescription>CPU and I/O utilization over time</CardDescription>
+                <CardTitle>Uso de recursos em tempo real</CardTitle>
+                <CardDescription>Uso da CPU e de I/O com o tempo</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="cpuio-chart-container">
@@ -316,15 +308,15 @@ int main() {
 
             <Tabs defaultValue="code">
               <TabsList className="tabs-list">
-                <TabsTrigger value="code">Source Code</TabsTrigger>
-                <TabsTrigger value="analysis">Analysis</TabsTrigger>
+                <TabsTrigger value="code">Código</TabsTrigger>
+                <TabsTrigger value="analysis">Análise</TabsTrigger>
               </TabsList>
 
               <TabsContent value="code">
                 <Card>
                   <CardHeader>
                     <CardTitle>{currentProgram.name}</CardTitle>
-                    <CardDescription>Source code being analyzed</CardDescription>
+                    <CardDescription>Visualize o código utilizado!</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <pre className="cpuio-code-block">
@@ -337,21 +329,47 @@ int main() {
               <TabsContent value="analysis">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Performance Analysis</CardTitle>
-                    <CardDescription>Understanding process behavior</CardDescription>
+                    <CardTitle>Análise do processo</CardTitle>
+                    <CardDescription>Destrinchando cada processo</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="analysis-section">
                       <h4>Process Characteristics:</h4>
                       <ul>
-                        {/* lógica de conteúdo já existente */}
+                        {currentProgram.type === 'CPU-bound' ? (
+                          <>
+                            <li>Utiliza intensivamente a CPU para realizar cálculos.</li>
+                            <li>Raramente espera por operações de entrada/saída (I/O).</li>
+                            <li>Desempenho depende fortemente da capacidade do processador.</li>
+                          </>
+                        ) : (
+                          <>
+                            <li>Passa a maior parte do tempo esperando por operações de arquivo ou disco.</li>
+                            <li>Baixa utilização da CPU, com trocas de contexto frequentes.</li>
+                            <li>Desempenho depende da velocidade do disco ou do subsistema de I/O.</li>
+                          </>
+                        )}
                       </ul>
+
                     </div>
                     <div className="analysis-section">
                       <h4>Optimization Strategies:</h4>
                       <ul>
-                        {/* lógica de conteúdo já existente */}
+                        {currentProgram.type === 'CPU-bound' ? (
+                          <>
+                            <li>Utilize multithreading ou multiprocessing para paralelizar tarefas.</li>
+                            <li>Otimize os algoritmos para reduzir o número de ciclos de CPU.</li>
+                            <li>Garanta que a CPU não esteja sendo limitada por outros processos.</li>
+                          </>
+                        ) : (
+                          <>
+                            <li>Use operações de I/O assíncronas ou não bloqueantes.</li>
+                            <li>Agrupe operações de I/O para reduzir o tempo de espera.</li>
+                            <li>Utilize dispositivos de armazenamento mais rápidos, como SSDs.</li>
+                          </>
+                        )}
                       </ul>
+
                     </div>
                   </CardContent>
                 </Card>
@@ -361,6 +379,8 @@ int main() {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 
