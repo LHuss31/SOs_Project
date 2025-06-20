@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/UserRoutes');
 var authRouter = require('./routes/AuthRoutes'); // Adicione se quiser usar as rotas de autenticação
 
 var connectDB = require('./config/db');
