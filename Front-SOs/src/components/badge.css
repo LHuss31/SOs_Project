@@ -1,0 +1,48 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  outline: none;
+}
+
+.badge:focus {
+  box-shadow: 0 0 0 2px #3b82f6; /* Azul como exemplo de `focus:ring-ring` */
+}
+
+.badge-default {
+  background-color: #3b82f6; /* bg-primary */
+  color: white; /* text-primary-foreground */
+}
+
+.badge-default:hover {
+  background-color: #2563eb; /* primary/80 */
+}
+
+.badge-secondary {
+  background-color: #e5e7eb; /* bg-secondary */
+  color: #111827; /* text-secondary-foreground */
+}
+
+.badge-secondary:hover {
+  background-color: #d1d5db; /* secondary/80 */
+}
+
+.badge-destructive {
+  background-color: #ef4444; /* bg-destructive */
+  color: white; /* text-destructive-foreground */
+}
+
+.badge-destructive:hover {
+  background-color: #dc2626; /* destructive/80 */
+}
+
+.badge-outline {
+  background-color: transparent;
+  color: #111827; /* text-foreground */
+  border: 1px solid #d1d5db;
+}
