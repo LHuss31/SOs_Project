@@ -2,62 +2,65 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: #181c24;
-  color: #181c24;
+  color: #f1f5f9;
 }
 
 .system-calls-container {
-  min-height: 100vh;  
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 100px;
+  padding-top: 80px;
 }
 
 .system-calls-header {
   padding: 1rem;
-  padding-right: 35rem;
+  max-width: 1200px;
+  width: 100%;
 }
 
 .system-calls-header h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  color: #4fc3f7;
 }
 
 .system-calls-header p {
-  color: #6b7280;
+  color: #94a3b8;
 }
 
 .system-calls-content {
   display: flex;
-  flex: 1;
+  gap: 2rem;
+  max-width: 1200px;
+  width: 100%;
 }
 
-/* Sidebar */
 .system-calls-sidebar {
   width: 300px;
-  border-right: 1px solid #e5e7eb;
-  background-color: #f9fafb;
-  padding: 1rem;
-  border-radius: 1rem;
+  background-color: #1f2937;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  height: fit-content;
 }
 
 .system-calls-sidebar h2 {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
-  color: #333333;
+  color: #f1f5f9;
 }
 
 .system-calls-sidebar p {
-  color: #6b7280;
+  color: #94a3b8;
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
 
-/* CARD BASE */
 .system-calls-card {
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 16px;
   cursor: pointer;
   transition: transform 0.2s;
@@ -70,9 +73,9 @@ body {
 }
 
 .system-calls-card.unselected {
-  background-color: white;
-  color: black;
-  border: 1px solid #d1d5db;
+  background-color: #1f2937;
+  color: white;
+  border: 1px solid #334155;
 }
 
 .system-calls-card:hover {
@@ -100,82 +103,91 @@ body {
   font-weight: 600;
 }
 
-.system-calls-sidebar .system-calls-description {
+.system-calls-description {
   font-size: 0.9rem;
-  color: #333333;
+  color: #e2e8f0;
   line-height: 1.2rem;
 }
 
-.system-calls-sidebar .system-calls-card.selected .system-calls-description {
-  color: rgb(230, 230, 230);
-}
-
-/* Conteúdo principal */
 .system-calls-main-content {
   flex: 1;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
-  height: 600px;
+  gap: 1rem;
 }
 
 .system-calls-call-header {
-  margin-bottom: 10px;
+  background-color: #1f2937;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #334155;
 }
 
 .system-calls-call-header h3 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   margin-bottom: 0.25rem;
+  color: #f1f5f9;
 }
 
 .system-calls-call-header span {
-  color: #6b7280;
   font-size: 0.95rem;
+  color: #94a3b8;
 }
 
 .system-calls-tabs {
   display: flex;
-  border-bottom: 1px solid #d1d5db;
-  margin: 1rem 0 10px 0;
+  background-color: #1f2937;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #334155;
 }
 
 .system-calls-tab {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   font-weight: 500;
-  color: #6b7280;
+  font-size: 0.95rem;
+  color: #94a3b8;
+  flex: 1;
+  text-align: center;
 }
 
 .system-calls-tab.active {
-  color: #4fc3f7;
-  border-bottom: 2px solid #111827;
+  background-color: #4fc3f7;
+  color: #000;
 }
 
 .system-calls-tab:hover {
   cursor: pointer;
-}
-
-.system-calls-tab.disabled {
-  color: #d1d5db;
-  cursor: not-allowed;
+  background-color: #334155;
+  color: #f1f5f9;
 }
 
 .system-calls-code-box {
-  flex-grow: 1;
-  background: #f9fafb;
-  padding: 1.25rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  overflow-y: auto;
-  color: #181c24;
+  background-color: #000;
+  color: #94a3b8;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  font-family: monospace;
+  font-size: 0.9rem;
+  min-height: 220px;
 }
 
 .system-calls-compile-btn {
-  background-color: #111827;
-  color: white;
+  background-color: #4fc3f7;
+  color: rgb(0, 0, 0);
   padding: 0.75rem 2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   font-weight: 500;
   font-size: 0.9rem;
   cursor: pointer;
+  align-self: start;
+}
+
+.system-calls-compile-btn:hover {
+  background-color: #4fc3f7;
+  color: #000;
+  box-shadow: 0 0 12px #4fc3f7, 0 0 24px #4fc3f7;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }

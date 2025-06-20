@@ -1,274 +1,227 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #181c24;
-    color: #181c24;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #181c24;
+  color: #f1f5f9;
 }
 
 .vm-page-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 15rem;
-    padding-top: 7rem;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .vm-page-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .vm-page-header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #e0e0e0;
-    margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4fc3f7;
+  margin-bottom: 0.5rem;
 }
 
 .vm-page-header p {
-    color: #6b7280;
-    font-size: 0.95rem;
+  color: #cbd5e1;
+  font-size: 0.95rem;
 }
 
 .vm-page-content {
-    margin-top: 2rem;
-    display: flex;
-    gap: 2rem;
-}
-
-.vm-left-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.vm-config-card, .vm-stats-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    width: 300px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.vm-config-card h2, .vm-stats-card h2 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: #111827;
-}
-
-.vm-config-subtitle {
-    color: #6b7280;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-}
-
-.vm-config-item {
-    margin-bottom: 1rem;
-}
-
-.vm-config-item label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-weight: 500;
-    color: #111827;
-}
-
-.vm-config-item input[type="range"] {
-    width: 100%;
-}
-
-.vm-config-item select {
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    background: white;
-}
-
-.vm-play-button {
-    width: 100%;
-    padding: 0.75rem;
-    background: #111827;
-    color: white;
-    border-radius: 6px;
-    border: none;
-    font-weight: 600;
-    margin-bottom: 0.7rem;
-    cursor: pointer;
-}
-
-.vm-reset-button {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #d1d5db;
-    background: white;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.vm-stat-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.8rem;
-    font-weight: 500;
-    color: #111827;
-}
-
-.vm-fault-value {
-    background-color: #ef4444;
-    color: white;
-    padding: 0.3rem 0.7rem;
-    border-radius: 50px;
-    font-weight: 600;
-}
-
-.vm-stat-badge {
-    background-color: #f3f4f6;
-    color: #111827;
-    padding: 0.3rem 0.7rem;
-    border-radius: 50px;
-    font-weight: 600;
-}
-
-
-
-/* BLOCO MEMORY STATE AJUSTADO */
-
-.vm-memory-card {
-    background: white;
-    padding: 1.5rem;
-    display: flex;
-    border-radius: 12px;
-    width: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex-direction: column;
-    height: 80%;
-    justify-content: flex-start;
-}
-
-.vm-memory-card h2 {
-    font-size: 1.3rem;
-    margin-bottom: 0.2rem;
-    color: #111827;
-}
-
-.vm-memory-subtitle {
-    font-size: 0.85rem;
-    color: #6b7280;
-    margin-bottom: 1.5rem;
-}
-
-.vm-memory-frames {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    justify-items: center;
-}
-
-.vm-memory-frame {
-    text-align: center;
-}
-
-.vm-frame-title {
-    font-size: 0.85rem;
-    color: #374151;
-    margin-bottom: 0.4rem;
-    display: block;
-}
-
-.vm-frame-box {
-    background-color: #f1f5f9;
-    border: 2px solid #cbd5e1;
-    height: 120px;
-    width: 100px;
-    line-height: 120px;
-    border-radius: 8px;
-    font-size: 1.5rem;
-    margin: 0 auto;
-}
-
-.vm-memory-legend {
-    display: flex;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
-    color: #374151;
-    flex-direction: column;
-}
-
-.vm-legend {
-    display: flex;
-    align-items: center;
-    font-size: 0.85rem;
-}
-
-.vm-legend-box {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-    margin-right: 0.5rem;
-    border: 1px solid #cbd5e1;
-}
-
-.vm-legend-new .vm-legend-box {
-    background-color: #bbf7d0;
-}
-
-.vm-legend-replaced .vm-legend-box {
-    background-color: #fecaca;
-}
-
-.vm-legend-existing .vm-legend-box {
-    background-color: #dbeafe;
-}
-
-.vm-right-panel {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   gap: 2rem;
-  width: 100%;
+  flex-wrap: wrap;
 }
 
-.vm-timeline-card {
-  background: white;
+.vm-config-card,
+.vm-stats-card {
+  background-color: #1f2937;
   padding: 1.5rem;
   border-radius: 12px;
-  width: 100%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 1px solid #374151;
+  width: 300px;
+  margin-top: 1rem;
 }
 
-.vm-timeline-card h2 {
+.vm-timeline-card,
+.vm-memory-card {
+  background-color: #1f2937;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #374151;
+  flex: 1 1 700px;
+  max-width: 900px;
+  margin-top: 1rem;
+}
+
+.vm-config-card h2,
+.vm-stats-card h2,
+.vm-timeline-card h2,
+.vm-memory-card h2 {
   font-size: 1.3rem;
-  margin-bottom: 0.2rem;
-  color: #111827;
+  margin-bottom: 0.5rem;
+  color: #f1f5f9;
 }
 
+.vm-config-subtitle,
+.vm-memory-subtitle,
 .vm-timeline-subtitle {
-  font-size: 0.85rem;
-  color: #6b7280;
+  color: #94a3b8;
+  font-size: 0.875rem;
   margin-bottom: 1rem;
 }
 
-.vm-timeline-header, .vm-timeline-row {
+.vm-config-item {
+  margin-bottom: 1rem;
+}
+
+.vm-config-item label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+.vm-config-item input[type="range"] {
+  width: 100%;
+}
+
+.vm-config-item select {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #4b5563;
+  background-color: #1f2937;
+  color: #f1f5f9;
+}
+
+.vm-play-button,
+.vm-reset-button {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vm-play-button {
+  background-color: #4fc3f7;
+  color: black;
+  border: none;
+  margin-bottom: 0.7rem;
+}
+
+.vm-reset-button {
+  background-color: #334155;
+  color: #f1f5f9;
+  border: none;
+}
+
+.vm-stat-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+.vm-fault-value {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  font-weight: 600;
+}
+
+.vm-stat-badge {
+  background-color: #475569;
+  color: #f1f5f9;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  font-weight: 600;
+}
+
+.vm-memory-frames {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.vm-frame-title {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin-bottom: 0.4rem;
+  display: block;
+  text-align: center;
+}
+
+.vm-frame-box {
+  background-color: #334155;
+  border: 2px dashed #64748b;
+  height: 120px;
+  width: 100px;
+  line-height: 120px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  margin: 0 auto;
+  color: #f1f5f9;
+  text-align: center;
+}
+
+.vm-memory-legend {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vm-legend {
+  display: flex;
+  align-items: center;
+}
+
+.vm-legend-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  border: 1px solid #94a3b8;
+}
+
+.vm-legend-new .vm-legend-box {
+  background-color: #bbf7d0;
+}
+
+.vm-legend-replaced .vm-legend-box {
+  background-color: #fecaca;
+}
+
+.vm-legend-existing .vm-legend-box {
+  background-color: #dbeafe;
+}
+
+.vm-timeline-header,
+.vm-timeline-row {
   display: grid;
   grid-template-columns: 1fr 1fr 3fr 1fr;
   padding: 0.5rem 0;
   font-weight: 500;
-  color: #111827;
+  color: #f1f5f9;
 }
 
 .vm-timeline-header {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #4b5563;
   font-weight: 700;
 }
 
 .vm-timeline-row {
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #334155;
 }
 
 .vm-timeline-fault {
@@ -281,8 +234,8 @@ body {
 }
 
 .vm-timeline-hit {
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: #334155;
+  color: #f1f5f9;
   padding: 0.2rem 0.6rem;
   border-radius: 50px;
   font-size: 0.85rem;
