@@ -26,9 +26,14 @@
 }
 
 .cpuio-code-block {
-  background: #f0f0f0;
+  background: #374151;
   padding: 10px;
   overflow-x: auto;
   white-space: pre-wrap;
   margin-bottom: 20px;
+}
+
+
+.header{
+  margin-top: 3rem;
 }
