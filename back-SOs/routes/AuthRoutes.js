@@ -7,17 +7,18 @@ const User = require('../Models/User');
 const { registerSchema, loginSchema } = require('../validation/userSchemas');
 
 router.post('/cadastro', async (req, res) => {
+     console.log('Body recebido:', req.body);
     const { error } = registerSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: 'Dados inválidos!', error: error.details });
     }
 
     // Pegue nome, email e senha do body
-    const { nome, email, senha } = req.body;
+    const { email, senha } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(senha, 10);
-        const newUser = new User({ nome, email, senha: hashedPassword });
+        const newUser = new User({ email, senha: hashedPassword });
         await newUser.save();
 
         const token = jwt.sign(
