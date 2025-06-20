@@ -12,11 +12,12 @@ router.post('/cadastro', async (req, res) => {
         return res.status(400).json({ message: 'Dados inválidos!', error: error.details });
     }
 
-    const { email, senha } = req.body;
+    // Pegue nome, email e senha do body
+    const { nome, email, senha } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(senha, 10);
-        const newUser = new User({ email, senha: hashedPassword });
+        const newUser = new User({ nome, email, senha: hashedPassword });
         await newUser.save();
 
         const token = jwt.sign(
