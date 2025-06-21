@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../Models/User');
 const { registerSchema, loginSchema } = require('../validation/userSchemas');
 
 router.post('/cadastro', async (req, res) => {
+     console.log('Body recebido:', req.body);
     const { error } = registerSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: 'Dados inválidos!', error: error.details });
     }
 
+    // Pegue nome, email e senha do body
     const { email, senha } = req.body;
 
     try {
