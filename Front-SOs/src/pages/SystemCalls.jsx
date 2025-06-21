@@ -125,7 +125,7 @@ const systemCalls = [
       // Garante exibição imediata no terminal
       setvbuf(stdout, NULL, _IONBF, 0);
   
-      int fd = open("arquivo_open.txt", O_CREAT | O_WRONLY, 0644);
+      int fd = open("./temptxt/arquivo_open.txt", O_CREAT | O_WRONLY, 0644);
   
       if (fd == -1) {
           perror("Erro ao abrir/criar o arquivo");
@@ -138,7 +138,7 @@ const systemCalls = [
   
       // Lista os arquivos no diretório atual (./temp/temptxt)
       printf("\\nListando arquivos na pasta atual:\\n");
-      system("ls -l ./");
+      system("ls -l ./temptxt");
   
       return 0;
   }`,
@@ -162,7 +162,7 @@ const systemCalls = [
       char buffer[128];
       ssize_t bytesLidos;
   
-      fd = open("arquivo_open.txt", O_RDONLY);
+      fd = open("./temptxt/arquivo_open.txt", O_RDONLY);
       if (fd == -1) {
           perror("Erro ao abrir o arquivo para leitura");
           return 1;
@@ -198,7 +198,7 @@ const systemCalls = [
       setvbuf(stdout, NULL, _IONBF, 0);
   
       const char *mensagem = "Escrevendo com write()!\\n";
-      int fd = open("arquivo_open.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+      int fd = open("./temptxt/arquivo_open.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
   
       if (fd == -1) {
           perror("Erro ao abrir o arquivo para escrita");
@@ -219,7 +219,7 @@ const systemCalls = [
   
       // Mostra os arquivos na pasta atual (./temp/temptxt)
       printf("\\nListando arquivos no diretório atual:\\n");
-      system("ls -l ./");
+      system("ls -l ./temptxt");
   
       return 0;
   }`,
