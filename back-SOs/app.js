@@ -1,9 +1,13 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// var indexRouter = require('./routes/index');
+
+const systemCallRouter = require('./routes/SystemCallRoutes');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/UserRoutes');
 var authRouter = require('./routes/AuthRoutes');
@@ -15,6 +19,7 @@ var connectDB = require('./config/db');
 connectDB();
 
 var app = express();
+app.use(cors());
 
 // view engine setup (remova se não for usar views)
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +31,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.use('/users', usersRouter);
+app.use('/api/systemcalls', systemCallRouter);
 app.use('/', indexRouter);
+
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/notes', notesRouter);
