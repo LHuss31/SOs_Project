@@ -34,7 +34,7 @@ function Dashboard() {
     <>
       <Navbar />
       <div className="menu-container">
-        <h1 className="welcome-title">Boas-vindas, aaaaa!</h1>
+        <h1 className="welcome-title">Boas-vindas!!</h1>
         <p className="welcome-subtitle">
           Seu lugar para aprender sobre conceitos de Sistemas Operacionais
         </p>
