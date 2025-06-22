@@ -1,17 +1,17 @@
-// Importa o mongoose
+// Importa o módulo mongoose para definir o schema do modelo
 const mongoose = require('mongoose');
 
-// Define o schema (estrutura) para o modelo de nota (note)
+// Define o schema de uma nota
 const noteSchema = new mongoose.Schema({
-  // Campo 'text' que armazena o conteúdo da nota, obrigatório
+  // Campo de texto da nota, obrigatório
   text: { type: String, required: true },
 
-  // Campo 'user' que referencia o usuário dono da nota
+  // Referência ao usuário que criou a nota (relacionamento com o modelo User)
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-}, { 
-  // Gera automaticamente os campos 'createdAt' e 'updatedAt'
-  timestamps: true 
-});
 
-// Exporta o modelo 'Note' com base no schema definido
+// Ativa timestamps automáticos: cria os campos createdAt e updatedAt
+}, { timestamps: true });
+
+// Exporta o modelo Note com base no schema definido
+
 module.exports = mongoose.model('Note', noteSchema);

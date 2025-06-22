@@ -1,25 +1,30 @@
-// Importa o Express e cria um roteador separado
+
+// Importa o framework Express e cria um roteador
 const express = require('express');
 const router = express.Router();
 
-// Importa bcrypt para criptografar senhas e jwt para autenticação via token
+// Importa bibliotecas para criptografia de senhas e geração de tokens JWT
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Modelo do usuário no banco de dados
+// Importa o modelo de usuário do banco de dados e os esquemas de validação com Joi
 const User = require('../Models/User');
 
 // Schemas de validação (usualmente feitos com Joi)
 const { registerSchema, loginSchema } = require('../validation/userSchemas');
 
-// Rota de cadastro de usuário
+
+// ==================== ROTA DE CADASTRO ====================
+
+// Define a rota POST para /cadastro
 router.post('/cadastro', async (req, res) => {
-    // Loga o corpo recebido para debug
+    // Exibe no console os dados recebidos no corpo da requisição
     console.log('Body recebido:', req.body);
 
-    // Valida os dados usando o schema de cadastro
+    // Valida os dados de entrada com o esquema de cadastro
     const { error } = registerSchema.validate(req.body);
     if (error) {
+        // Retorna erro 400 se os dados forem inválidos
         return res.status(400).json({ message: 'Dados inválidos!', error: error.details });
     }
 
@@ -27,6 +32,7 @@ router.post('/cadastro', async (req, res) => {
     const { email, senha } = req.body;
 
     try {
+
         // Criptografa a senha com bcrypt (salt de 10)
         const hashedPassword = await bcrypt.hash(senha, 10);
 
@@ -52,9 +58,12 @@ router.post('/cadastro', async (req, res) => {
     }
 });
 
-// Rota de login
+// ==================== ROTA DE LOGIN ====================
+
+// Define a rota POST para /login
 router.post('/login', async (req, res) => {
-    // Valida os dados de entrada
+    // Valida os dados com o esquema de login
+
     const { error } = loginSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: 'Dados inválidos!', error: error.details });
@@ -69,30 +78,33 @@ router.post('/login', async (req, res) => {
 
         // Se o usuário não existir, retorna erro
         if (!user) {
+            // Retorna erro 404 se o usuário não for encontrado
             return res.status(404).json({ message: 'Usuário não encontrado!' });
         }
-
-        // Compara a senha fornecida com o hash salvo
+        // Compara a senha fornecida com a senha criptografada do banco
         const isMatch = await bcrypt.compare(senha, user.senha);
         if (!isMatch) {
+            // Retorna erro 401 se a senha estiver incorreta
             return res.status(401).json({ message: 'Senha incorreta!' });
         }
-
-        // Gera o token JWT com ID do usuário
+        // Gera token JWT se o login for bem-sucedido
         const token = jwt.sign(
             { userID: user._id },
             process.env.JWT_SECRET,
             { expiresIn: '3h' }
         );
 
-        // Retorna sucesso com o token
-        res.json({ message: `Usuário logado com sucesso`, token });
+
+        // Retorna token com mensagem de sucesso
+        res.json({ message: 'Usuário logado com sucesso', token });
     } catch (error) {
-        // Em caso de erro interno
+        // Em caso de erro, exibe no console e retorna erro 500
         console.error(error);
         res.status(500).json({ message: 'Erro ao fazer o login', error: error.message });
     }
 });
 
-// Exporta o roteador para uso no app principal
+
+// Exporta o roteador para ser usado em outras partes da aplicação
+
 module.exports = router;
