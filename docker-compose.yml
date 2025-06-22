@@ -1,0 +1,33 @@
+version: "3.3"
+services:
+  backend:
+    build: ./back-SOs
+    ports:
+      - "3000:3000"  # Alterado para 3000
+    volumes:
+      - ./back-SOs:/app
+    env_file:
+      - ./back-SOs/.env
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./Front-SOs
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Front-SOs:/app
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
