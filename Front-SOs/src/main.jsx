@@ -9,6 +9,8 @@ import CPU_IO_Bound from './pages/CPU_IO_Bound.jsx'
 import VirtualMemoryPage from './pages/VirtualMemoryPage.jsx'
 import ProducerConsumer from './pages/ProducerConsumer.js'
 
+// Renderiza a aplicação React dentro do elemento com id 'root'
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
