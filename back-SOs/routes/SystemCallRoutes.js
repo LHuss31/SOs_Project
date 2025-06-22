@@ -3,6 +3,7 @@ const fs = require('fs');
 const { exec, spawn } = require('child_process');
 const { randomUUID } = require('crypto');
 const path = require('path');
+const verifyToken = require('../middlewares/verifyToken'); // importa o middleware
 
 const router = express.Router();
 const tempDir = path.resolve('./temp');
@@ -16,54 +17,48 @@ if (!fs.existsSync(temptxtDir)) {
   fs.mkdirSync(temptxtDir, { recursive: true });
 }
 
-router.post('/run', (req, res) => {
-  const codigo = req.body.codigo;
-  const id = randomUUID();
-  const sourcePath = path.join(tempDir, `${id}.c`);
-  const exePath = path.join(tempDir, id); // binário
+router.post('/run', verifyToken, (req, res) => {
+  const { codigo } = req.body;
+  const userId = req.user._id?.toString();
 
-  fs.writeFileSync(sourcePath, codigo);
+  if (!userId) {
+    return res.status(401).json({ error: 'Usuário não autenticado.' });
+  }
+
+  const id = randomUUID();
+  const userDir = path.join(temptxtDir, userId);
+  const sourcePath = path.join(userDir, `${id}.c`);
+  const exePath = path.join(userDir, id);
+
+  if (!fs.existsSync(userDir)) {
+    fs.mkdirSync(userDir, { recursive: true });
+  }
+
+  // Substitui caminhos relativos para apontar para a pasta do usuário
+  const codigoComPathCorrigido = codigo.replace(/"\.\/temptxt\/(.*?)"/g, `"${userDir}/$1"`);
+
+  fs.writeFileSync(sourcePath, codigoComPathCorrigido);
 
   exec(`gcc "${sourcePath}" -o "${exePath}"`, (err, _, stderrComp) => {
     if (err) {
-      return res.json({
-        stdout: '',
-        stderr: stderrComp,
-        exitCode: 1
-      });
+      return res.json({ stdout: '', stderr: stderrComp, exitCode: 1 });
     }
 
-    // Executa o binário dentro da pasta ./temp
-    const processo = spawn(`./${id}`, {
-      cwd: tempDir // executa dentro de temp (então o código pode acessar ./temptxt)
-    });
+    const processo = spawn(`./${id}`, { cwd: userDir });
 
-    let stdout = '';
-    let stderr = '';
+    let stdout = '', stderr = '';
 
-    processo.stdout.on('data', (data) => {
-      stdout += data.toString();
-    });
-
-    processo.stderr.on('data', (data) => {
-      stderr += data.toString();
-    });
+    processo.stdout.on('data', (data) => stdout += data.toString());
+    processo.stderr.on('data', (data) => stderr += data.toString());
 
     processo.on('close', (code) => {
-      res.json({
-        stdout,
-        stderr,
-        exitCode: code
-      });
+      res.json({ stdout, stderr, exitCode: code });
 
-      // Limpa os arquivos após execução
       fs.unlink(sourcePath, () => {});
       fs.unlink(exePath, () => {});
     });
 
-    setTimeout(() => {
-      processo.kill('SIGKILL');
-    }, 10000);
+    setTimeout(() => processo.kill('SIGKILL'), 10000);
   });
 });
 
