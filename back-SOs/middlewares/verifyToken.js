@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
     }
 
     console.log("Decoded JWT:", decoded);
-    // 👇 aqui, assumimos que o nome do campo é userID, não _id
+    // aqui, assumimos que o nome do campo é userID, não _id
     req.user = { _id: decoded.userID };
     next();
   });
