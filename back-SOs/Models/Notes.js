@@ -13,4 +13,5 @@ const noteSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Exporta o modelo Note com base no schema definido
+
 module.exports = mongoose.model('Note', noteSchema);

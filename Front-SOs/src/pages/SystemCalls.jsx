@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import NavBar from "../components/NavBar";
-import "./SystemCallsPage.css";
+import React, { useState } from "react"; // Importa React e o hook useState
+import NavBar from "../components/NavBar"; // Importa o componente de navegação
+import "./SystemCallsPage.css"; // Importa o CSS da página
 
+// Array com todas as chamadas de sistema e seus dados
 const systemCalls = [
+  // Cada objeto representa uma chamada de sistema com nome, tipo, código C e explicação
   {
     name: "fork()",
     description: "Cria um novo processo duplicando o processo atual",
@@ -237,21 +239,24 @@ int main() {
 
 ];
 
+// Componente principal da página de exploração de system calls
 export default function SystemCallsExplorer() {
-  const [selected, setSelected] = useState("fork()");
-  const [activeTab, setActiveTab] = useState("Code");
-  const [stdout, setStdout] = useState("");
-  const [stderr, setStderr] = useState("");
+  const [selected, setSelected] = useState("fork()"); // Armazena a system call selecionada
+  const [activeTab, setActiveTab] = useState("Code"); // Aba ativa (Code, Explanation, Output)
+  const [stdout, setStdout] = useState(""); // Saída padrão da execução do código
+  const [stderr, setStderr] = useState(""); // Saída de erro da execução do código
 
-  const token = localStorage.getItem("token");
-  console.log("TOKEN", localStorage.getItem("token"))
+  const token = localStorage.getItem("token"); // Recupera o token JWT do usuário (se existir)
+  console.log("TOKEN", localStorage.getItem("token")); // Loga o token no console (debug)
 
+  // Busca a system call atualmente selecionada
   const currentCall = systemCalls.find((c) => c.name === selected);
 
+  // Renderiza o conteúdo da aba ativa
   const renderContent = () => {
-    if (activeTab === "Code") return <pre>{currentCall.code}</pre>;
-    if (activeTab === "Explanation") return <pre>{currentCall.explanation}</pre>;
-    if (activeTab === "Output")
+    if (activeTab === "Code") return <pre>{currentCall.code}</pre>; // Aba de código
+    if (activeTab === "Explanation") return <pre>{currentCall.explanation}</pre>; // Aba de explicação
+    if (activeTab === "Output") // Aba de saída (execução)
       return (
         <div>
           <pre><strong>stdout:</strong> <br />{stdout}</pre>
@@ -260,63 +265,71 @@ export default function SystemCallsExplorer() {
       );
   };
 
+  // Envia código para o backend compilar e executar
   const handleCompileAndRun = async () => {
     try {
-      const token = localStorage.getItem("token");
-  
+      const token = localStorage.getItem("token"); // Reobtém o token (por segurança)
+
+      // Se não houver token, bloqueia execução
       if (!token) {
         setStdout("");
         setStderr("Usuário não autenticado. Faça login.");
         setActiveTab("Output");
         return;
       }
-  
+
+      // Envia a system call selecionada para execução no backend
       const response = await fetch("http://localhost:3000/api/systemcalls/run", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}` // Token de autenticação JWT
         },
-        body: JSON.stringify({ codigo: currentCall.code }),
+        body: JSON.stringify({ codigo: currentCall.code }), // Código a ser executado
       });
-  
-      const result = await response.json();
-  
+
+      const result = await response.json(); // Resposta da API
+
+      // Se o backend retornou erro de autenticação
       if (response.status === 401) {
         setStdout("");
         setStderr("Usuário não autenticado. Faça login.");
       } else {
+        // Exibe stdout e stderr retornados
         setStdout(result.stdout || "");
         setStderr(result.stderr || "");
       }
-  
-      setActiveTab("Output");
+
+      setActiveTab("Output"); // Ativa aba de saída após execução
     } catch (err) {
+      // Erro de rede ou do servidor
       setStdout("");
       setStderr("Erro ao conectar com o backend.");
       setActiveTab("Output");
     }
   };
-  
 
+  // JSX da interface
   return (
     <div className="system-calls-container">
-      <NavBar />
+      <NavBar /> {/* Componente de navegação */}
       <header className="system-calls-header">
         <h1>Explorador de Chamadas de Sistema</h1>
         <p>Explore chamadas de sistema essenciais com exemplos interativos de código</p>
       </header>
 
       <div className="system-calls-content">
+        {/* Coluna lateral esquerda com lista de chamadas */}
         <aside className="system-calls-sidebar">
           <h2>Chamadas de Sistema</h2>
           <p>Clique em uma chamada para explorar</p>
 
+          {/* Lista com todas as system calls */}
           {systemCalls.map((call) => (
             <div
               key={call.name}
               className={`system-calls-card ${selected === call.name ? "selected" : "unselected"}`}
-              onClick={() => setSelected(call.name)}
+              onClick={() => setSelected(call.name)} // Muda chamada selecionada
             >
               <div className="system-calls-card-header">
                 <span className="system-calls-title">{call.name}</span>
@@ -327,22 +340,26 @@ export default function SystemCallsExplorer() {
           ))}
         </aside>
 
+        {/* Coluna principal com conteúdo da chamada selecionada */}
         <main className="system-calls-main-content">
           <div className="system-calls-call-header">
             <h3>{selected}</h3>
             <span>{currentCall.description}</span>
           </div>
 
+          {/* Abas: Código / Explicação / Saída */}
           <div className="system-calls-tabs">
             <div className={`system-calls-tab ${activeTab === "Code" ? "active" : ""}`} onClick={() => setActiveTab("Code")}>Código</div>
             <div className={`system-calls-tab ${activeTab === "Explanation" ? "active" : ""}`} onClick={() => setActiveTab("Explanation")}>Explicação</div>
             <div className={`system-calls-tab ${activeTab === "Output" ? "active" : ""}`} onClick={() => setActiveTab("Output")}>Saída</div>
           </div>
 
+          {/* Conteúdo da aba selecionada */}
           <div className="system-calls-code-box">
             {renderContent()}
           </div>
 
+          {/* Botão para compilar e executar */}
           <button className="system-calls-compile-btn" onClick={handleCompileAndRun}>▶ Compilar & Executar</button>
         </main>
       </div>
