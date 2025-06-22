@@ -22,10 +22,10 @@ router.post('/cadastro', async (req, res) => {
         await newUser.save();
 
         const token = jwt.sign(
-            { userID: newUser._id },
+            { _id: usuario._id }, // renomeia para _id direto
             process.env.JWT_SECRET,
-            { expiresIn: '3h' }
-        );
+            { expiresIn: "3h" }
+          );
 
         res.status(201).json({ message: "Usuário cadastrado com sucesso!", userId: newUser._id, token});
     } catch (error) {
