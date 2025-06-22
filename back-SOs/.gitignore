@@ -26,6 +26,3 @@ Thumbs.db
 # Saída de build (se gerar alguma)
 dist/
 build/
-
-# Arquivos temporários do seu backend
-temp/
