@@ -116,22 +116,22 @@ const systemCalls = [
     "name": "open()",
     "description": "Abre um arquivo e retorna um descritor de arquivo",
     "type": "Entrada/Saída",
-    "code": "#include <fcntl.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    setvbuf(stdout, NULL, _IONBF, 0);\n\n    int fd = open(\"arquivo_open.txt\", O_CREAT | O_WRONLY, 0644);\n\n    if (fd == -1) {\n        perror(\"Erro ao abrir/criar o arquivo\");\n        return 1;\n    }\n\n    printf(\"Arquivo aberto/criado com sucesso! FD: %d\\n\", fd);\n\n    close(fd);\n\n    printf(\"\\nListando arquivos na pasta atual:\\n\");\n    system(\"ls -l\");\n\n    return 0;\n}",
-    "explanation": "A chamada open() abre ou cria um arquivo.\n- O_CREAT: cria o arquivo se ele não existir\n- O_WRONLY: abre somente para escrita\n- Retorna um descritor de arquivo >= 0 ou -1 em erro.\n- O arquivo é criado na pasta isolada do usuário (cwd do processo)\n- system(\"ls -l\") lista os arquivos no diretório atual"
+    "code": "#include <fcntl.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    setvbuf(stdout, NULL, _IONBF, 0);\n\n    int fd = open(\"arquivo_open.txt\", O_CREAT | O_WRONLY, 0644);\n\n    if (fd == -1) {\n        perror(\"Erro ao abrir/criar o arquivo\");\n        return 1;\n    }\n\n    printf(\"Arquivo aberto/criado com sucesso! FD: %d\\n\", fd);\n\n    close(fd);\n\n    printf(\"\\nListando arquivos na pasta isolada do usuário:\\n\");\n    system(\"pwd\");\n    system(\"ls -l\");\n\n    return 0;\n}",
+    "explanation": "A chamada open() abre ou cria um arquivo.\n- O_CREAT: cria o arquivo se ele não existir\n- O_WRONLY: abre somente para escrita\n- O arquivo é criado na pasta isolada do usuário (cwd do processo)\n- system(\"pwd\") mostra a pasta atual\n- system(\"ls -l\") lista os arquivos no diretório"
   },
   {
     "name": "write()",
     "description": "Escreve dados em um descritor de arquivo",
     "type": "Entrada/Saída",
-    "code": "#include <fcntl.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main() {\n    setvbuf(stdout, NULL, _IONBF, 0);\n\n    const char *mensagem = \"Escrevendo com write()!\\n\";\n    int fd = open(\"arquivo_open.txt\", O_WRONLY | O_CREAT | O_TRUNC, 0644);\n\n    if (fd == -1) {\n        perror(\"Erro ao abrir o arquivo para escrita\");\n        return 1;\n    }\n\n    ssize_t bytesEscritos = write(fd, mensagem, strlen(mensagem));\n    if (bytesEscritos == -1) {\n        perror(\"Erro ao escrever\");\n        close(fd);\n        return 1;\n    }\n\n    printf(\"Bytes escritos: %zd\\n\", bytesEscritos);\n    printf(\"Mensagem escrita com sucesso.\\n\");\n\n    close(fd);\n\n    printf(\"\\nListando arquivos no diretório atual:\\n\");\n    system(\"ls -l\");\n\n    return 0;\n}",
-    "explanation": "A chamada write() escreve dados em um descritor de arquivo.\n- O_WRONLY abre o arquivo para escrita\n- O_CREAT cria o arquivo se ele não existir\n- O_TRUNC apaga o conteúdo anterior se o arquivo já existir\n- Retorna o número de bytes escritos ou -1 em caso de erro\n- Usa setvbuf() para garantir visibilidade no terminal do site"
+    "code": "#include <fcntl.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nint main() {\n    setvbuf(stdout, NULL, _IONBF, 0);\n\n    const char *mensagem = \"Escrevendo com write()!\\n\";\n    int fd = open(\"arquivo_open.txt\", O_WRONLY | O_CREAT | O_TRUNC, 0644);\n\n    if (fd == -1) {\n        perror(\"Erro ao abrir o arquivo para escrita\");\n        return 1;\n    }\n\n    ssize_t bytesEscritos = write(fd, mensagem, strlen(mensagem));\n    if (bytesEscritos == -1) {\n        perror(\"Erro ao escrever\");\n        close(fd);\n        return 1;\n    }\n\n    printf(\"Bytes escritos: %zd\\n\", bytesEscritos);\n    printf(\"Mensagem escrita com sucesso.\\n\");\n\n    close(fd);\n\n    printf(\"\\nListando arquivos na pasta isolada do usuário:\\n\");\n    system(\"pwd\");\n    system(\"ls -l\");\n\n    return 0;\n}",
+    "explanation": "A chamada write() escreve dados em um descritor de arquivo.\n- O_WRONLY abre o arquivo para escrita\n- O_CREAT cria o arquivo se ele não existir\n- O_TRUNC apaga o conteúdo anterior se o arquivo já existir\n- Retorna o número de bytes escritos ou -1 em caso de erro\n- Usa setvbuf() para garantir visibilidade\n- system(\"pwd\") mostra o caminho da pasta do usuário"
   },
   {
     "name": "read()",
     "description": "Lê dados de um descritor de arquivo",
     "type": "Entrada/Saída",
-    "code": "#include <fcntl.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    setvbuf(stdout, NULL, _IONBF, 0);\n\n    int fd;\n    char buffer[128];\n    ssize_t bytesLidos;\n\n    fd = open(\"arquivo_open.txt\", O_RDONLY);\n    if (fd == -1) {\n        perror(\"Erro ao abrir o arquivo para leitura\");\n        return 1;\n    }\n\n    bytesLidos = read(fd, buffer, sizeof(buffer) - 1);\n    if (bytesLidos == -1) {\n        perror(\"Erro ao ler o arquivo\");\n        close(fd);\n        return 1;\n    }\n\n    buffer[bytesLidos] = '\\0';\n    printf(\"Bytes lidos: %zd\\nConteúdo lido: %s\\n\", bytesLidos, buffer);\n\n    close(fd);\n    return 0;\n}",
-    "explanation": "A chamada read() lê até N bytes de um descritor de arquivo e armazena no buffer.\n- O arquivo precisa estar aberto com O_RDONLY\n- Retorna o número de bytes lidos ou -1 em caso de erro\n- Após a leitura, o conteúdo é exibido no terminal\n- Usa setvbuf() para garantir visibilidade no terminal do site"
+    "code": "#include <fcntl.h>\n#include <unistd.h>\n#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    setvbuf(stdout, NULL, _IONBF, 0);\n\n    int fd;\n    char buffer[128];\n    ssize_t bytesLidos;\n\n    fd = open(\"arquivo_open.txt\", O_RDONLY);\n    if (fd == -1) {\n        perror(\"Erro ao abrir o arquivo para leitura\");\n        return 1;\n    }\n\n    bytesLidos = read(fd, buffer, sizeof(buffer) - 1);\n    if (bytesLidos == -1) {\n        perror(\"Erro ao ler o arquivo\");\n        close(fd);\n        return 1;\n    }\n\n    buffer[bytesLidos] = '\\0';\n    printf(\"Bytes lidos: %zd\\nConteúdo lido: %s\\n\", bytesLidos, buffer);\n\n    close(fd);\n\n    printf(\"\\nConteúdo do diretório do usuário:\\n\");\n    system(\"pwd\");\n    system(\"ls -l\");\n\n    return 0;\n}",
+    "explanation": "A chamada read() lê até N bytes de um descritor de arquivo e armazena no buffer.\n- O arquivo precisa estar aberto com O_RDONLY\n- Retorna o número de bytes lidos ou -1 em caso de erro\n- Usa setvbuf() para garantir visibilidade\n- system(\"pwd\") mostra o diretório atual, que é isolado por usuário"
   },
   {
     name: "sbrk()",
@@ -243,6 +243,9 @@ export default function SystemCallsExplorer() {
   const [stdout, setStdout] = useState("");
   const [stderr, setStderr] = useState("");
 
+  const token = localStorage.getItem("token");
+  console.log("TOKEN", localStorage.getItem("token"))
+
   const currentCall = systemCalls.find((c) => c.name === selected);
 
   const renderContent = () => {
@@ -259,9 +262,9 @@ export default function SystemCallsExplorer() {
 
   const handleCompileAndRun = async () => {
     try {
-      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
   
-      if (!userId) {
+      if (!token) {
         setStdout("");
         setStderr("Usuário não autenticado. Faça login.");
         setActiveTab("Output");
@@ -270,13 +273,23 @@ export default function SystemCallsExplorer() {
   
       const response = await fetch("http://localhost:3000/api/systemcalls/run", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ codigo: currentCall.code, userId }),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ codigo: currentCall.code }),
       });
   
       const result = await response.json();
-      setStdout(result.stdout || "");
-      setStderr(result.stderr || "");
+  
+      if (response.status === 401) {
+        setStdout("");
+        setStderr("Usuário não autenticado. Faça login.");
+      } else {
+        setStdout(result.stdout || "");
+        setStderr(result.stderr || "");
+      }
+  
       setActiveTab("Output");
     } catch (err) {
       setStdout("");
@@ -284,6 +297,7 @@ export default function SystemCallsExplorer() {
       setActiveTab("Output");
     }
   };
+  
 
   return (
     <div className="system-calls-container">

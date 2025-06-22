@@ -3,6 +3,7 @@ const fs = require('fs');
 const { exec, spawn } = require('child_process');
 const { randomUUID } = require('crypto');
 const path = require('path');
+const verifyToken = require('../middlewares/verifyToken'); // importa o middleware
 
 const router = express.Router();
 const tempDir = path.resolve('./temp');
@@ -16,11 +17,12 @@ if (!fs.existsSync(temptxtDir)) {
   fs.mkdirSync(temptxtDir, { recursive: true });
 }
 
-router.post('/run', (req, res) => {
-  const { codigo, userId } = req.body;
+router.post('/run', verifyToken, (req, res) => {
+  const { codigo } = req.body;
+  const userId = req.user._id?.toString();
 
   if (!userId) {
-    return res.status(400).json({ error: 'userId é obrigatório.' });
+    return res.status(401).json({ error: 'Usuário não autenticado.' });
   }
 
   const id = randomUUID();
@@ -28,12 +30,11 @@ router.post('/run', (req, res) => {
   const sourcePath = path.join(userDir, `${id}.c`);
   const exePath = path.join(userDir, id);
 
-  // Cria a pasta do usuário se não existir
   if (!fs.existsSync(userDir)) {
     fs.mkdirSync(userDir, { recursive: true });
   }
 
-  // Substitui os caminhos dos arquivos .txt para apontar para a pasta do usuário
+  // Substitui caminhos relativos para apontar para a pasta do usuário
   const codigoComPathCorrigido = codigo.replace(/"\.\/temptxt\/(.*?)"/g, `"${userDir}/$1"`);
 
   fs.writeFileSync(sourcePath, codigoComPathCorrigido);
