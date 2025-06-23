@@ -44,9 +44,9 @@ router.post('/cadastro', async (req, res) => {
 
         // Gera um token JWT com id do usuário
         const token = jwt.sign(
-            { _id: usuario._id }, // renomeia para _id direto
-            process.env.JWT_SECRET, // chave secreta vinda do .env
-            { expiresIn: "3h" } // tempo de expiração do token
+            { _id: newUser._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "3h" }
         );
 
         // Retorna sucesso com o ID e token
