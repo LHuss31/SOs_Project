@@ -1,9 +1,12 @@
+
 import React, { useEffect, useState } from 'react';
 import './Notes.css';
 import NavBar from '../components/NavBar.jsx';
 
 function Notes() {
+  // Estado para armazenar todas as anotações criadas
   const [notes, setNotes] = useState([]);
+  // Estado para armazenar o texto atual digitado no textarea
   const [newNote, setNewNote] = useState('');
 
   const token = localStorage.getItem('token');
@@ -61,22 +64,33 @@ function Notes() {
 
   return (
     <>
-      <NavBar />
-      <div className="containerN">
-        <div className="Login-containerN">
-          <h2>Anotações</h2>
+      <NavBar /> {/* Componente de navegação no topo */}
+      <div className="containerN"> {/* Container geral da página */}
+        <div className="Login-containerN"> {/* Container estilizado centralizado */}
+          <h2>Anotações</h2> {/* Título da seção */}
+
+          {/* Formulário para adicionar nova anotação */}
           <form onSubmit={handleAddNote} style={{ width: '100%' }}>
             <textarea
-              placeholder="Digite sua anotação..."
-              value={newNote}
-              onChange={e => setNewNote(e.target.value)}
-              style={{ marginBottom: 10, resize: 'vertical', minHeight: 40, maxHeight: 200, width: '100%' }}
+              placeholder="Digite sua anotação..." // Placeholder visível quando vazio
+              value={newNote} // Valor atual do textarea
+              onChange={e => setNewNote(e.target.value)} // Atualiza o estado conforme o usuário digita
+              style={{
+                marginBottom: 10,
+                resize: 'vertical',
+                minHeight: 40,
+                maxHeight: 200,
+                width: '100%',
+              }}
             />
-            <button type="submit">Adicionar</button>
+            <button type="submit">Adicionar</button> {/* Botão para adicionar anotação */}
           </form>
+
+          {/* Lista de anotações já existentes */}
           <div style={{ marginTop: 30, width: '100%' }}>
             <h3>Anotações existentes:</h3>
             <ul>
+              
               {notes.map((note) => (
                 <li key={note._id} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
                   <span style={{ flex: 1, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{note.text}</span>
@@ -88,7 +102,7 @@ function Notes() {
                       border: 'none',
                       borderRadius: 4,
                       padding: '2px 8px',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
                     }}
                     onClick={() => handleDeleteNote(note._id)}
                   >
@@ -103,5 +117,5 @@ function Notes() {
     </>
   );
 }
-
 export default Notes;
+
