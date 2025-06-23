@@ -1,6 +1,7 @@
-import React, { useState } from 'react'; // Importa o React e o hook useState para gerenciamento de estado
-import './Notes.css'; // Importa o arquivo CSS para estilização da página de notas
-import NavBar from '../components/NavBar.jsx'; // Importa o componente de navegação
+
+import React, { useEffect, useState } from 'react';
+import './Notes.css';
+import NavBar from '../components/NavBar.jsx';
 
 function Notes() {
   // Estado para armazenar todas as anotações criadas
@@ -8,17 +9,57 @@ function Notes() {
   // Estado para armazenar o texto atual digitado no textarea
   const [newNote, setNewNote] = useState('');
 
-  // Função chamada ao submeter o formulário para adicionar uma nova anotação
-  const handleAddNote = (e) => {
-    e.preventDefault(); // Previne o comportamento padrão do formulário (recarregar a página)
-    if (!newNote.trim()) return; // Impede adicionar notas vazias ou com apenas espaços
-    setNotes([...notes, { text: newNote }]); // Adiciona a nova anotação ao array
-    setNewNote(''); // Limpa o campo do textarea
+  const token = localStorage.getItem('token');
+
+  // Buscar notas do usuário logado
+  useEffect(() => {
+    fetch('/api/notes', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => setNotes(data))
+      .catch(err => console.error('Erro ao buscar notas:', err));
+  }, []);
+
+  // Adicionar nota
+  const handleAddNote = async (e) => {
+    e.preventDefault();
+    if (!newNote.trim()) return;
+
+    try {
+      const res = await fetch('/api/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ text: newNote })
+      });
+
+      const createdNote = await res.json();
+      setNotes([createdNote, ...notes]);
+      setNewNote('');
+    } catch (err) {
+      console.error('Erro ao adicionar nota:', err);
+    }
   };
 
-  // Função para apagar uma anotação específica com base no índice
-  const handleDeleteNote = (idxToDelete) => {
-    setNotes(notes.filter((_, idx) => idx !== idxToDelete)); // Remove a anotação da lista
+  // Deletar nota
+  const handleDeleteNote = async (id) => {
+    try {
+      await fetch(`/api/notes/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setNotes(notes.filter(note => note._id !== id));
+    } catch (err) {
+      console.error('Erro ao deletar nota:', err);
+    }
   };
 
   return (
@@ -49,27 +90,10 @@ function Notes() {
           <div style={{ marginTop: 30, width: '100%' }}>
             <h3>Anotações existentes:</h3>
             <ul>
-              {notes.map((note, idx) => (
-                <li
-                  key={idx}
-                  style={{
-                    marginBottom: 8,
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  {/* Texto da anotação com quebra de linha preservada */}
-                  <span
-                    style={{
-                      flex: 1,
-                      whiteSpace: 'pre-wrap',
-                      wordBreak: 'break-word',
-                    }}
-                  >
-                    {note.text}
-                  </span>
-                  
-                  {/* Botão para apagar a anotação */}
+              
+              {notes.map((note) => (
+                <li key={note._id} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
+                  <span style={{ flex: 1, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{note.text}</span>
                   <button
                     style={{
                       marginLeft: 10,
@@ -80,7 +104,7 @@ function Notes() {
                       padding: '2px 8px',
                       cursor: 'pointer',
                     }}
-                    onClick={() => handleDeleteNote(idx)} // Chama a função para deletar a anotação
+                    onClick={() => handleDeleteNote(note._id)}
                   >
                     Apagar
                   </button>
@@ -93,5 +117,5 @@ function Notes() {
     </>
   );
 }
+export default Notes;
 
-export default Notes; // Exporta o componente Notes para ser utilizado em outras partes da aplicação
