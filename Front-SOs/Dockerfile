@@ -7,5 +7,10 @@ RUN npm install
 
 COPY . .
 
+# Adiciona o Vite (e outros binários) ao PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
 EXPOSE 5173
-CMD ["npm", "run", "dev"]
+
+# Executa o Vite permitindo acesso externo
+CMD ["npm", "run", "dev", "--", "--host"]
