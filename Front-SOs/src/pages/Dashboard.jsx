@@ -1,12 +1,17 @@
+// Importa os hooks e componentes necessários do React e da aplicação
 import React, { useState } from "react";
-import './Dashboard.css';
-import Navbar from "../components/NavBar";
-import { useNavigate } from 'react-router-dom';
+import './Dashboard.css'; // Importa os estilos CSS personalizados do Dashboard
+import Navbar from "../components/NavBar"; // Componente de navegação superior
+import { useNavigate } from 'react-router-dom'; // Hook para navegação entre rotas
 
+// Função principal do componente Dashboard
 function Dashboard() {
+  // Estado para armazenar qual opção foi selecionada
   const [selected, setSelected] = useState(null);
+  // Hook para navegação programática
   const navigate = useNavigate();
 
+  // Lista de opções disponíveis no dashboard com título, descrição e rota
   const options = [
     {
       title: "SystemCalls",
@@ -32,26 +37,33 @@ function Dashboard() {
 
   return (
     <>
+      {/* Barra de navegação no topo da página */}
       <Navbar />
+
       <div className="menu-container">
+        {/* Título e subtítulo de boas-vindas */}
         <h1 className="welcome-title">Boas-vindas!!</h1>
         <p className="welcome-subtitle">
           Seu lugar para aprender sobre conceitos de Sistemas Operacionais
         </p>
 
+        {/* Grid de cards com as opções de simulação */}
         <div className="card-grid">
           {options.map((option, index) => (
             <div
               key={index}
-              className={'card'}
+              className={'card'} // Classe CSS usada para estilizar o card
             >
+              {/* Título e descrição do card */}
               <h3 className="card-title">{option.title}</h3>
               <p className="card-description">{option.description}</p>
+
+              {/* Botão para iniciar simulação correspondente */}
               <button
                 className="card-button"
                 onClick={() => {
-                  setSelected(option.title);
-                  navigate(option.link);
+                  setSelected(option.title); // Atualiza qual opção foi selecionada
+                  navigate(option.link);     // Navega para a página da simulação
                 }}
               >
                 Start Learning
@@ -64,4 +76,5 @@ function Dashboard() {
   );
 }
 
+// Exporta o componente para uso em outras partes da aplicação
 export default Dashboard;

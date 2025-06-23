@@ -1,3 +1,4 @@
+
 // Importa o framework Express e cria um roteador
 const express = require('express');
 const router = express.Router();
@@ -8,7 +9,10 @@ const jwt = require('jsonwebtoken');
 
 // Importa o modelo de usuário do banco de dados e os esquemas de validação com Joi
 const User = require('../Models/User');
+
+// Schemas de validação (usualmente feitos com Joi)
 const { registerSchema, loginSchema } = require('../validation/userSchemas');
+
 
 // ==================== ROTA DE CADASTRO ====================
 
@@ -28,26 +32,27 @@ router.post('/cadastro', async (req, res) => {
     const { email, senha } = req.body;
 
     try {
-        // Criptografa a senha com um salt de 10 rounds
+
+        // Criptografa a senha com bcrypt (salt de 10)
         const hashedPassword = await bcrypt.hash(senha, 10);
 
-        // Cria um novo usuário com o email e a senha criptografada
+        // Cria um novo usuário com a senha já criptografada
         const newUser = new User({ email, senha: hashedPassword });
 
-        // Salva o novo usuário no banco de dados
+        // Salva o usuário no banco de dados
         await newUser.save();
 
-        // Gera um token JWT com o ID do usuário e tempo de expiração de 3 horas
+        // Gera um token JWT com id do usuário
         const token = jwt.sign(
-            { userID: newUser._id },
-            process.env.JWT_SECRET,
-            { expiresIn: "3h" }
+            { _id: usuario._id }, // renomeia para _id direto
+            process.env.JWT_SECRET, // chave secreta vinda do .env
+            { expiresIn: "3h" } // tempo de expiração do token
         );
 
-        // Retorna status 201 com mensagem, ID e token do usuário criado
+        // Retorna sucesso com o ID e token
         res.status(201).json({ message: "Usuário cadastrado com sucesso!", userId: newUser._id, token });
     } catch (error) {
-        // Em caso de erro interno, exibe no console e retorna status 500
+        // Em caso de erro, retorna status 500
         console.error(error);
         res.status(500).json({ message: "Erro ao criar usuário!", error: error.message });
     }
@@ -58,36 +63,37 @@ router.post('/cadastro', async (req, res) => {
 // Define a rota POST para /login
 router.post('/login', async (req, res) => {
     // Valida os dados com o esquema de login
+
     const { error } = loginSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: 'Dados inválidos!', error: error.details });
     }
 
-    // Extrai email e senha do corpo da requisição
+    // Extrai email e senha do corpo
     const { email, senha } = req.body;
 
     try {
-        // Busca o usuário no banco pelo email
+        // Procura o usuário no banco pelo e-mail
         const user = await User.findOne({ email });
 
+        // Se o usuário não existir, retorna erro
         if (!user) {
             // Retorna erro 404 se o usuário não for encontrado
             return res.status(404).json({ message: 'Usuário não encontrado!' });
         }
-
         // Compara a senha fornecida com a senha criptografada do banco
         const isMatch = await bcrypt.compare(senha, user.senha);
         if (!isMatch) {
             // Retorna erro 401 se a senha estiver incorreta
             return res.status(401).json({ message: 'Senha incorreta!' });
         }
-
         // Gera token JWT se o login for bem-sucedido
         const token = jwt.sign(
             { userID: user._id },
             process.env.JWT_SECRET,
             { expiresIn: '3h' }
         );
+
 
         // Retorna token com mensagem de sucesso
         res.json({ message: 'Usuário logado com sucesso', token });
@@ -98,5 +104,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
 // Exporta o roteador para ser usado em outras partes da aplicação
+
 module.exports = router;

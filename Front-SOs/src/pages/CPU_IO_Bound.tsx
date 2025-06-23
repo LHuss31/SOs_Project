@@ -1,3 +1,4 @@
+// Importações dos hooks React e componentes personalizados
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/card';
 import { Button } from '../components/button';
@@ -8,20 +9,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Play, Pause, RotateCcw, Upload } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-import './CPU_IO_Bound.css'; // certifique-se de criar esse CSS com os estilos correspondentes
+import './CPU_IO_Bound.css'; // Importa estilos personalizados para a página
 
+// Componente principal da visualização de CPU/I-O bound
 const CPU_IO_Bounds = () => {
+  // Estado que armazena o programa selecionado
   const [selectedProgram, setSelectedProgram] = useState('cpu-intensive');
+  // Estado que indica se a simulação está em execução
   const [isRunning, setIsRunning] = useState(false);
+  // Estado para armazenar dados de uso da CPU e IO ao longo do tempo
   const [cpuData, setCpuData] = useState<{ time: number; cpu: number; io: number }[]>([]);
+  // Estado para IO separado (não utilizado neste código, mas reservado)
   const [ioData, setIoData] = useState([]);
+  // Estado para armazenar estatísticas simuladas do processo
   const [processStats, setProcessStats] = useState({
     cpuTime: 0,
     ioWaitTime: 0,
     totalTime: 0,
     contextSwitches: 0,
   });
-
+// Programas simulados definidos como objetos
   const programs = {
    'cpu-intensive': {
       name: 'CPU-Intensive Program',
@@ -136,6 +143,7 @@ int main() {
     },
   };
 
+    // Efeito que roda periodicamente enquanto a simulação estiver ativa
   useEffect(() => {
     let interval;
     if (isRunning) {
@@ -143,6 +151,7 @@ int main() {
         const currentProgram = programs[selectedProgram];
         const time = Date.now();
 
+        // Simula o uso de CPU e I/O de acordo com o tipo de programa
         let cpuUsage, ioUsage;
         if (currentProgram.type === 'CPU-bound') {
           cpuUsage = 80 + Math.random() * 15;
@@ -155,24 +164,29 @@ int main() {
           ioUsage = 25 + Math.random() * 30;
         }
 
+        // Atualiza os dados de uso de recursos para o gráfico
         setCpuData(prev => {
           const newData = [...prev, { time: time, cpu: cpuUsage, io: ioUsage }];
-          return newData.slice(-20);
+          return newData.slice(-20); // Limita a 20 pontos para visualização
         });
 
+        // Atualiza estatísticas do processo simuladamente
         setProcessStats(prev => ({
           cpuTime: prev.cpuTime + (cpuUsage / 100),
           ioWaitTime: prev.ioWaitTime + (ioUsage / 100),
           totalTime: prev.totalTime + 1,
           contextSwitches: prev.contextSwitches + Math.floor(Math.random() * 3),
         }));
-      }, 500);
+      }, 500); // Executa a cada 500ms
     }
 
+    // Limpa o intervalo ao desmontar o componente ou parar a simulação
     return () => clearInterval(interval);
   }, [isRunning, selectedProgram]);
 
+  // Alterna o estado de execução da simulação
   const handleRunProgram = () => setIsRunning(!isRunning);
+  // Reseta os dados e estatísticas da simulação
   const handleReset = () => {
     setIsRunning(false);
     setCpuData([]);
@@ -185,11 +199,12 @@ int main() {
     });
   };
 
+  // Programa atualmente selecionado
   const currentProgram = programs[selectedProgram];
 
   return (
     <>
-    <Navbar />
+    <Navbar /> {/* Barra de navegação no topo */}
     <div className="cpuio-container">
       <div className="cpuio-wrapper">
         <div className="header">
@@ -200,7 +215,7 @@ int main() {
         </div>
 
         <div className="cpuio-layout">
-          {/* Controls */}
+          {/* Painel lateral com controles */}
           <div className="cpuio-controls">
             <Card>
               <CardHeader>
@@ -213,6 +228,7 @@ int main() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
+                    {/* Lista de programas disponíveis */}
                     {Object.entries(programs).map(([key, program]) => (
                       <SelectItem key={key} value={key}>
                         {program.name}
@@ -221,6 +237,7 @@ int main() {
                   </SelectContent>
                 </Select>
 
+                {/* Exibição do tipo do programa com badge colorido */}
                 <div className="program-type">
                   <span className="label">Type:</span>
                   <Badge variant={
@@ -230,10 +247,13 @@ int main() {
                     {currentProgram.type}
                   </Badge>
                 </div>
+
+                {/* Descrição do programa */}
                 <p className="description">
                   {currentProgram.description}
                 </p>
 
+                {/* Botões de controle da simulação */}
                 <div className="button-group">
                   <Button onClick={handleRunProgram}>
                     {isRunning ? <Pause className="icon" /> : <Play className="icon" />}
@@ -246,6 +266,7 @@ int main() {
               </CardContent>
             </Card>
 
+            {/* Exibição das estatísticas do processo */}
             <Card>
               <CardHeader>
                 <CardTitle>Estatísticas</CardTitle>
@@ -269,12 +290,11 @@ int main() {
                 </div>
               </CardContent>
             </Card>
-
-            
           </div>
 
-          {/* Visualization */}
+          {/* Coluna de visualização (gráfico + tabs) */}
           <div className="visualization-column">
+            {/* Gráfico de uso de recursos */}
             <Card>
               <CardHeader>
                 <CardTitle>Uso de recursos em tempo real</CardTitle>
@@ -306,6 +326,7 @@ int main() {
               </CardContent>
             </Card>
 
+            {/* Tabs para código e análise do processo */}
             <Tabs defaultValue="code">
               <TabsList className="tabs-list">
                 <TabsTrigger value="code">Código</TabsTrigger>
@@ -350,8 +371,8 @@ int main() {
                           </>
                         )}
                       </ul>
-
                     </div>
+
                     <div className="analysis-section">
                       <h4>Optimization Strategies:</h4>
                       <ul>
@@ -369,7 +390,6 @@ int main() {
                           </>
                         )}
                       </ul>
-
                     </div>
                   </CardContent>
                 </Card>
@@ -380,14 +400,8 @@ int main() {
       </div>
     </div>
     </>
-    
   );
 };
 
+// Exporta o componente principal para uso na aplicação
 export default CPU_IO_Bounds;
-
-
-
-
-
- 
