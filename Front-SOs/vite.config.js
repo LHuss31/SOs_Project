@@ -6,7 +6,11 @@ export default defineConfig({
   server: {
     host: true,
     proxy: {
-      '/api': 'http://backend:3000',
+      '/api': {
+        target: 'http://andromeda.lasdpc.icmc.usp.br:8282',
+        changeOrigin: true,
+        secure: false
+      },
     },
     allowedHosts: ['andromeda.lasdpc.icmc.usp.br'],
   }
