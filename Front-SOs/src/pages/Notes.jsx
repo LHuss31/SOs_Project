@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Notes.css';
 import NavBar from '../components/NavBar.jsx';
 
@@ -6,15 +6,57 @@ function Notes() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
 
-  const handleAddNote = (e) => {
+  const token = localStorage.getItem('token');
+
+  // Buscar notas do usuário logado
+  useEffect(() => {
+    fetch('/api/notes', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => setNotes(data))
+      .catch(err => console.error('Erro ao buscar notas:', err));
+  }, []);
+
+  // Adicionar nota
+  const handleAddNote = async (e) => {
     e.preventDefault();
     if (!newNote.trim()) return;
-    setNotes([...notes, { text: newNote }]);
-    setNewNote('');
+
+    try {
+      const res = await fetch('/api/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ text: newNote })
+      });
+
+      const createdNote = await res.json();
+      setNotes([createdNote, ...notes]);
+      setNewNote('');
+    } catch (err) {
+      console.error('Erro ao adicionar nota:', err);
+    }
   };
 
-  const handleDeleteNote = (idxToDelete) => {
-    setNotes(notes.filter((_, idx) => idx !== idxToDelete));
+  // Deletar nota
+  const handleDeleteNote = async (id) => {
+    try {
+      await fetch(`/api/notes/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setNotes(notes.filter(note => note._id !== id));
+    } catch (err) {
+      console.error('Erro ao deletar nota:', err);
+    }
   };
 
   return (
@@ -35,8 +77,8 @@ function Notes() {
           <div style={{ marginTop: 30, width: '100%' }}>
             <h3>Anotações existentes:</h3>
             <ul>
-              {notes.map((note, idx) => (
-                <li key={idx} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
+              {notes.map((note) => (
+                <li key={note._id} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
                   <span style={{ flex: 1, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{note.text}</span>
                   <button
                     style={{
@@ -48,7 +90,7 @@ function Notes() {
                       padding: '2px 8px',
                       cursor: 'pointer'
                     }}
-                    onClick={() => handleDeleteNote(idx)}
+                    onClick={() => handleDeleteNote(note._id)}
                   >
                     Apagar
                   </button>
