@@ -1,26 +1,31 @@
 version: "3.3"
+
 services:
   backend:
     build: ./back-SOs
     ports:
-      - "3000:3000"  # Alterado para 3000
+      - "3000:3000"
     volumes:
       - ./back-SOs:/app
     env_file:
       - ./back-SOs/.env
     depends_on:
       - mongo
+    networks:
+      - so-net
 
   frontend:
     build: ./Front-SOs
     ports:
-      - "5173:5173"
+      - "8182:5173"  # Porta externa 8182, interna 5173 (Vite)
     volumes:
       - ./Front-SOs:/app
     stdin_open: true
     tty: true
     depends_on:
       - backend
+    networks:
+      - so-net
 
   mongo:
     image: mongo
@@ -28,6 +33,11 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - so-net
 
 volumes:
   mongo-data:
+
+networks:
+  so-net:
