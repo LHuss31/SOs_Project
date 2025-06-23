@@ -279,7 +279,7 @@ export default function SystemCallsExplorer() {
       }
 
       // Envia a system call selecionada para execução no backend
-      const response = await fetch("http://localhost:3000/api/systemcalls/run", {
+      const response = await fetch("http://andromeda.lasdpc.icmc.usp.br:8182/api/systemcalls/run", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
